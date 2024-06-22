@@ -1,10 +1,11 @@
-const apiLink = 'https://pokeapi.co/api/v2/pokemon/';
+import axios from 'axios';
 
-export const getPokemons = async () => {
-  const info = await fetch(apiLink);
-  const data = await info.json();
+const instance = axios.create({
+  baseURL: 'https://pokeapi.co/api/v2/pokemon/',
+  timeout: 1000,
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+});
 
-  console.log(data);
-
-  return data;
-};
+export default instance;

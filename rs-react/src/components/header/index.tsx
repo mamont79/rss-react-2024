@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPokemons } from '../../api';
+import getPokemons from '../../api/getPokemons';
 
 export class Header extends React.Component {
   render() {
