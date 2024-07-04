@@ -1,6 +1,43 @@
-.card {
-  width: 150px;
-  height: 250px;
-  border: solid 2px goldenrod;
+.pokemon-card {
+  width: 160px;
+  height: 270px;
+  padding: 16px;
+  border: solid 4px goldenrod;
   border-radius: 15px;
+  background: rgb(252, 229, 82);
+}
+
+.pokemon-name {
+  text-transform: capitalize;
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.img-wrapper {
+  position: relative;
+  margin: 0 auto;
+  width: 150px;
+  height: 150px;
+}
+
+.pokemon-id {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-weight: bold;
+}
+
+.pokemon-img {
+  background-color: azure;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.pokemon-stats {
+  margin-top: 0px;
+  margin-bottom: 0;
+  font-size: 16px;
+  text-align: left;
 }

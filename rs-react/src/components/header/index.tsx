@@ -42,7 +42,7 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
 
   handleSearchClick = async () => {
     if (this.state.inputValue) {
-      const data = await getOnePokemon(this.state.inputValue);
+      const data = await getOnePokemon(this.state.inputValue.toLowerCase());
       this.context.updateData([
         {
           name: data.name,

@@ -3,7 +3,21 @@ import { PokemonCardProps } from '../../types/types';
 import './style.css';
 import geOnePokemon from '../../api/getOnePokemon';
 
-type PokemonCardState = { pictureUrl: string };
+type PokemonCardState = {
+  pictureUrl: string;
+  pokemonHeight: string;
+  pokemonWeight: string;
+  pokemonType: string;
+  pokemonId: string;
+};
+
+type PokemonStats = {
+  slot: number;
+  type: {
+    name: string;
+    url: string;
+  };
+};
 
 export class PokemonCard extends React.Component<
   PokemonCardProps,
@@ -13,6 +27,10 @@ export class PokemonCard extends React.Component<
     super(props);
     this.state = {
       pictureUrl: '',
+      pokemonHeight: '',
+      pokemonWeight: '',
+      pokemonType: '',
+      pokemonId: '',
     };
   }
 
@@ -20,22 +38,29 @@ export class PokemonCard extends React.Component<
     const id = Number(this.props.pokemonsCard.url.split('/').reverse()[1]);
     const data = await geOnePokemon(id);
     console.log(data);
-    const cardData = `${id}`;
-    this.setState({ pictureUrl: cardData });
-  };
-
-  getOne = async () => {
-    const data = await geOnePokemon(1);
-    console.log(data);
+    if (data) {
+      const types = data.types.map((type: PokemonStats) => type.type.name);
+      this.setState({
+        pictureUrl: data.sprites.front_default,
+        pokemonHeight: data.height,
+        pokemonWeight: data.weight,
+        pokemonType: types.join(', '),
+        pokemonId: `${id}`,
+      });
+    }
   };
 
   render() {
     return (
-      <div className="card">
-        <button onClick={this.getOne}>get one</button>
-        <p>{this.props.pokemonsCard.name}</p>
-        <p>{this.props.pokemonsCard.url}</p>
-        <p>{this.state.pictureUrl}</p>
+      <div className="pokemon-card">
+        <p className="pokemon-name">{this.props.pokemonsCard.name}</p>
+        <div className="img-wrapper">
+          <div className="pokemon-id">{this.state.pokemonId}</div>
+          <img src={this.state.pictureUrl} className="pokemon-img" />
+        </div>
+        <p className="pokemon-stats">Height: {this.state.pokemonHeight}</p>
+        <p className="pokemon-stats">Weight: {this.state.pokemonWeight}</p>
+        <p className="pokemon-stats">Type: {this.state.pokemonType}</p>
       </div>
     );
   }
