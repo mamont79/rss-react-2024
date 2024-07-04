@@ -4,14 +4,26 @@ import { MainContextType, PokemonUrlData } from '../../types/types';
 import { PokemonCard } from '../card';
 import './style.css';
 import getPokemons from '../../api/getPokemons';
+import getOnePokemon from '../../api/getOnePokemon';
 
 export class Display extends React.Component {
   static contextType = MainContext;
   declare context: MainContextType;
 
   componentDidMount = async () => {
-    const data = await getPokemons();
-    this.context.updateData(data);
+    const savedSearchPokemon = localStorage.getItem('searchPokemon');
+    if (savedSearchPokemon) {
+      const data = await getOnePokemon(savedSearchPokemon);
+      this.context.updateData([
+        {
+          name: data.name,
+          url: `https://pokeapi.co/api/v2/pokemon/${data.id}/`,
+        },
+      ]);
+    } else {
+      const data = await getPokemons();
+      this.context.updateData(data);
+    }
   };
 
   render() {
