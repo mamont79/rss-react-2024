@@ -5,6 +5,7 @@ import ErrorBoundary from '../../errorBoundary';
 import ButtonMistake from './buttonMistake';
 import './style.css';
 import getOnePokemon from '../../api/getOnePokemon';
+import getPokemons from '../../api/getPokemons';
 
 interface HeaderProps {}
 
@@ -40,9 +41,18 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
   };
 
   handleSearchClick = async () => {
-    const data = await getOnePokemon(this.state.inputValue);
-    console.log(data);
-    // this.context.updateData(data);
+    if (this.state.inputValue) {
+      const data = await getOnePokemon(this.state.inputValue);
+      this.context.updateData([
+        {
+          name: data.name,
+          url: `https://pokeapi.co/api/v2/pokemon/${data.id}/`,
+        },
+      ]);
+    } else {
+      const data = await getPokemons();
+      this.context.updateData(data);
+    }
   };
 
   render() {
