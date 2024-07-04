@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import './style.css';
 
 interface ErrorBoundaryProps {
   children?: ReactNode;
@@ -27,7 +28,7 @@ class ErrorBoundary extends React.Component<
 
   render() {
     if (this.state.hasError) {
-      return <h1>Pokedex has found an error</h1>;
+      return <div className="mistake">Pokedex has found an error</div>;
     }
 
     return this.props.children;

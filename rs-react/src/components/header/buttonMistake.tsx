@@ -13,7 +13,7 @@ class ButtonMistake extends React.Component<ButtonProps, ButtonState> {
   }
 
   handleError = (): void => {
-    this.setState({ buttonValue: 'got you' }, () => {
+    this.setState({ buttonValue: 'error' }, () => {
       throw new Error('Ok, ErrorBoundary works well :-)');
     });
   };

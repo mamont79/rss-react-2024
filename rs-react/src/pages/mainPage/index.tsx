@@ -3,6 +3,7 @@ import { Header } from '../../components/header';
 import { Display } from '../../components/display';
 import MainContext from './context';
 import { MainContextType, PokemonUrlData } from '../../types/types';
+import './style.css';
 
 export class MainPage extends React.Component<{}, MainContextType> {
   constructor(props: {}) {
@@ -20,7 +21,7 @@ export class MainPage extends React.Component<{}, MainContextType> {
   render() {
     return (
       <MainContext.Provider value={this.state}>
-        <div>
+        <div className="wrapper">
           <Header />
 
           <Display />

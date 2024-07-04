@@ -6,11 +6,9 @@ import ErrorBoundary from './errorBoundary';
 export class App extends React.Component {
   render() {
     return (
-      <>
-        <ErrorBoundary>
-          <MainPage />
-        </ErrorBoundary>
-      </>
+      <ErrorBoundary>
+        <MainPage />
+      </ErrorBoundary>
     );
   }
 }

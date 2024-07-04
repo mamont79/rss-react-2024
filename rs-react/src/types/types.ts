@@ -13,7 +13,7 @@ export type PokemonSearchProps = {
 
 export type DisplayProps = { pokemonsData: PokemonData[] };
 
-export type PokemonCardProps = { pokemonsCard: PokemonData; key: number };
+export type PokemonCardProps = { pokemonsCard: PokemonUrlData; key: number };
 
 export type PokemonSearchState = {
   searchValue: string;

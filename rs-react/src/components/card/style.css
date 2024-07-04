@@ -1,0 +1,6 @@
+.card {
+  width: 150px;
+  height: 250px;
+  border: solid 2px goldenrod;
+  border-radius: 15px;
+}
