@@ -9,6 +9,7 @@ type PokemonCardState = {
   pokemonWeight: string;
   pokemonType: string;
   pokemonId: string;
+  isLoading: boolean;
 };
 
 type PokemonStats = {
@@ -31,6 +32,7 @@ export class PokemonCard extends React.Component<
       pokemonWeight: '',
       pokemonType: '',
       pokemonId: '',
+      isLoading: true,
     };
   }
 
@@ -45,6 +47,7 @@ export class PokemonCard extends React.Component<
         pokemonWeight: data.weight,
         pokemonType: types.join(', '),
         pokemonId: `${id}`,
+        isLoading: false,
       });
     }
   };
@@ -52,14 +55,23 @@ export class PokemonCard extends React.Component<
   render() {
     return (
       <div className="pokemon-card">
-        <p className="pokemon-name">{this.props.pokemonsCard.name}</p>
-        <div className="img-wrapper">
-          <div className="pokemon-id">{this.state.pokemonId}</div>
-          <img src={this.state.pictureUrl} className="pokemon-img" />
-        </div>
-        <p className="pokemon-stats">Height: {this.state.pokemonHeight}</p>
-        <p className="pokemon-stats">Weight: {this.state.pokemonWeight}</p>
-        <p className="pokemon-stats">Type: {this.state.pokemonType}</p>
+        {this.state.isLoading ? (
+          <div className="loader">
+            <div>Loading...</div>
+            <img src="/pokeball_loader.png" className="pokeball-loader" />
+          </div>
+        ) : (
+          <>
+            <p className="pokemon-name">{this.props.pokemonsCard.name}</p>
+            <div className="img-wrapper">
+              <div className="pokemon-id">{this.state.pokemonId}</div>
+              <img src={this.state.pictureUrl} className="pokemon-img" />
+            </div>
+            <p className="pokemon-stats">Height: {this.state.pokemonHeight}</p>
+            <p className="pokemon-stats">Weight: {this.state.pokemonWeight}</p>
+            <p className="pokemon-stats">Type: {this.state.pokemonType}</p>
+          </>
+        )}
       </div>
     );
   }
