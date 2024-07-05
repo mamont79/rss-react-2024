@@ -2,6 +2,7 @@ import React from 'react';
 import { PokemonCardProps } from '../../types/types';
 import './style.css';
 import geOnePokemon from '../../api/getOnePokemon';
+import { LoaderCard } from './loader';
 
 type PokemonCardState = {
   pictureUrl: string;
@@ -56,10 +57,7 @@ export class PokemonCard extends React.Component<
     return (
       <div className="pokemon-card">
         {this.state.isLoading ? (
-          <div className="loader">
-            <div>Loading...</div>
-            <img src="/pokeball_loader.png" className="pokeball-loader" />
-          </div>
+          <LoaderCard />
         ) : (
           <>
             <p className="pokemon-name">{this.props.pokemonsCard.name}</p>

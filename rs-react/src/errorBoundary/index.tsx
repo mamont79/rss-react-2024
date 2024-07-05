@@ -1,13 +1,13 @@
 import React, { ReactNode } from 'react';
 import './style.css';
 
-interface ErrorBoundaryProps {
+type ErrorBoundaryProps = {
   children?: ReactNode;
-}
+};
 
-interface ErrorBoundaryState {
+type ErrorBoundaryState = {
   hasError: boolean;
-}
+};
 
 class ErrorBoundary extends React.Component<
   ErrorBoundaryProps,
@@ -29,7 +29,7 @@ class ErrorBoundary extends React.Component<
 
   render() {
     if (this.state.hasError) {
-      return <div className="mistake">Pokedex has found an error</div>;
+      return <div className="error-content">Pokedex has found an error</div>;
     }
 
     return this.props.children;

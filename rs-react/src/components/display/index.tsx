@@ -5,13 +5,14 @@ import { PokemonCard } from '../card';
 import './style.css';
 import getPokemons from '../../api/getPokemons';
 import getOnePokemon from '../../api/getOnePokemon';
+import { lsItem } from '../../constants/constants';
 
-export class Display extends React.Component {
+export class DisplayCards extends React.Component {
   static contextType = MainContext;
   declare context: MainContextType;
 
   componentDidMount = async () => {
-    const savedSearchPokemon = localStorage.getItem('searchPokemon');
+    const savedSearchPokemon = localStorage.getItem(lsItem);
     if (savedSearchPokemon) {
       const data = await getOnePokemon(savedSearchPokemon.toLowerCase());
       this.context.updateData([
@@ -34,7 +35,6 @@ export class Display extends React.Component {
         {data.map((el: PokemonUrlData) => (
           <div key={el.name}>
             <PokemonCard
-              key={Number(el.url.split('/').reverse()[1])}
               pokemonsCard={{
                 name: el.name,
                 url: el.url,

@@ -6,20 +6,19 @@ import ButtonMistake from './buttonMistake';
 import './style.css';
 import getOnePokemon from '../../api/getOnePokemon';
 import getPokemons from '../../api/getPokemons';
+import { lsItem } from '../../constants/constants';
 
-interface HeaderProps {}
-
-interface HeaderState {
+type HeaderState = {
   inputValue: string;
-}
+};
 
-export class Header extends React.Component<HeaderProps, HeaderState> {
+export class Header extends React.Component<unknown, HeaderState> {
   static contextType = MainContext;
   declare context: MainContextType;
 
   placeholderValue: string;
 
-  constructor(props: HeaderProps) {
+  constructor(props: unknown) {
     super(props);
     this.placeholderValue = 'Find your pokemon';
     this.state = {
@@ -28,7 +27,7 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
   }
 
   componentDidMount() {
-    const savedSearchPokemon = localStorage.getItem('searchPokemon');
+    const savedSearchPokemon = localStorage.getItem(lsItem);
     if (savedSearchPokemon) {
       this.setState({ inputValue: savedSearchPokemon });
     }
@@ -58,12 +57,12 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
   render() {
     return (
       <header className="header">
-        <div className="searh-wrapper">
+        <div className="search-wrapper">
           <ErrorBoundary>
             <ButtonMistake />
           </ErrorBoundary>
           <input
-            className="searchInput"
+            className="search-input"
             value={this.state.inputValue}
             onChange={this.handleInputChange}
             placeholder={this.placeholderValue}

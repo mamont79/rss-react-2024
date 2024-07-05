@@ -1,14 +1,12 @@
 import React from 'react';
 import './style.css';
 
-interface ButtonProps {}
-
-interface ButtonState {
+type ButtonState = {
   buttonValue: string;
-}
+};
 
-class ButtonMistake extends React.Component<ButtonProps, ButtonState> {
-  constructor(props: ButtonProps) {
+class ButtonMistake extends React.Component<unknown, ButtonState> {
+  constructor(props: unknown) {
     super(props);
     this.state = { buttonValue: 'Mistake' };
   }

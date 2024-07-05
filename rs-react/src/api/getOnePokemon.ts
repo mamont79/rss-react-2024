@@ -1,6 +1,6 @@
-import instance from '.';
+import instance from './instance';
 
-const geOnePokemon = async (id: number | string) => {
+const getOnePokemon = async (id: number | string) => {
   try {
     const { data } = await instance.get(`/${id}`);
     return data;
@@ -9,4 +9,4 @@ const geOnePokemon = async (id: number | string) => {
   }
 };
 
-export default geOnePokemon;
+export default getOnePokemon;

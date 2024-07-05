@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-.searh-wrapper {
+.search-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -31,7 +31,7 @@
   background: rgb(246, 114, 78);
 }
 
-.searchInput {
+.search-input {
   width: 250px;
   font-size: 20px;
   padding-left: 15px;
@@ -47,7 +47,7 @@
     box-shadow 0.3s;
 }
 
-.searchInput:focus {
+.search-input:focus {
   border-color: #ffcb05;
   box-shadow: 0 0 10px rgba(246, 225, 144, 0.907);
 }
