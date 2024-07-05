@@ -6,16 +6,9 @@ For start
 git clone https://github.com/mamont79/rss-react-2024.git
 ```
 
-Next install husky
+Next install project dependancies
 
 ```
-npm install
-```
-
-install project dependancies
-
-```
-cd rs-react
 npm install
 ```
 
