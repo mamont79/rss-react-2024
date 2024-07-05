@@ -5,8 +5,8 @@ import MainContext from './context';
 import { MainContextType, PokemonUrlData } from '../../types/types';
 import './style.css';
 
-export class MainPage extends React.Component<{}, MainContextType> {
-  constructor(props: {}) {
+export class MainPage extends React.Component<unknown, MainContextType> {
+  constructor(props: unknown) {
     super(props);
     this.state = {
       data: [],
