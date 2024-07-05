@@ -58,15 +58,20 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
   render() {
     return (
       <header className="header">
-        <input
-          value={this.state.inputValue}
-          onChange={this.handleInputChange}
-          placeholder={this.placeholderValue}
-        />
-        <button onClick={this.handleSearchClick}>Search</button>
-        <ErrorBoundary>
-          <ButtonMistake />
-        </ErrorBoundary>
+        <div className="searh-wrapper">
+          <ErrorBoundary>
+            <ButtonMistake />
+          </ErrorBoundary>
+          <input
+            className="searchInput"
+            value={this.state.inputValue}
+            onChange={this.handleInputChange}
+            placeholder={this.placeholderValue}
+          />
+          <button onClick={this.handleSearchClick} className="search-button">
+            Search
+          </button>
+        </div>
       </header>
     );
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import './style.css';
 
 interface ButtonProps {}
 
@@ -9,7 +10,7 @@ interface ButtonState {
 class ButtonMistake extends React.Component<ButtonProps, ButtonState> {
   constructor(props: ButtonProps) {
     super(props);
-    this.state = { buttonValue: 'Mistake button' };
+    this.state = { buttonValue: 'Mistake' };
   }
 
   handleError = (): void => {
@@ -19,7 +20,11 @@ class ButtonMistake extends React.Component<ButtonProps, ButtonState> {
   };
 
   render() {
-    return <button onClick={this.handleError}>{this.state.buttonValue}</button>;
+    return (
+      <button onClick={this.handleError} className="mistake-button">
+        {this.state.buttonValue}
+      </button>
+    );
   }
 }
 

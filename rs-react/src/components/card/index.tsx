@@ -37,7 +37,6 @@ export class PokemonCard extends React.Component<
   componentDidMount = async () => {
     const id = Number(this.props.pokemonsCard.url.split('/').reverse()[1]);
     const data = await geOnePokemon(id);
-    console.log(data);
     if (data) {
       const types = data.types.map((type: PokemonStats) => type.type.name);
       this.setState({

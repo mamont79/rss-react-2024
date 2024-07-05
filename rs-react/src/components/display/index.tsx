@@ -13,7 +13,7 @@ export class Display extends React.Component {
   componentDidMount = async () => {
     const savedSearchPokemon = localStorage.getItem('searchPokemon');
     if (savedSearchPokemon) {
-      const data = await getOnePokemon(savedSearchPokemon);
+      const data = await getOnePokemon(savedSearchPokemon.toLowerCase());
       this.context.updateData([
         {
           name: data.name,
