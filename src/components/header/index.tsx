@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { MainContextType } from '../../types/types';
-import MainContext from '../../pages/mainPage/context';
+import MainContext from '../../pages/context';
 import ErrorBoundary from '../../errorBoundary';
 import ButtonMistake from './buttonMistake';
 import './style.css';
@@ -8,41 +8,27 @@ import getOnePokemon from '../../api/getOnePokemon';
 import getPokemons from '../../api/getPokemons';
 import { lsItem } from '../../constants/constants';
 
-type HeaderState = {
-  inputValue: string;
-};
+export const Header: React.FC = () => {
+  const context = useContext(MainContext) as MainContextType;
+  const [inputValue, setInputValue] = useState<string>('');
 
-export class Header extends React.Component<unknown, HeaderState> {
-  static contextType = MainContext;
-  declare context: MainContextType;
-
-  placeholderValue: string;
-
-  constructor(props: unknown) {
-    super(props);
-    this.placeholderValue = 'Find your pokemon';
-    this.state = {
-      inputValue: '',
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     const savedSearchPokemon = localStorage.getItem(lsItem);
     if (savedSearchPokemon) {
-      this.setState({ inputValue: savedSearchPokemon });
+      setInputValue(savedSearchPokemon);
     }
-  }
+  }, []);
 
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
-    this.setState({ inputValue: newValue });
-    localStorage.setItem('searchPokemon', newValue);
+    setInputValue(newValue);
+    localStorage.setItem(lsItem, newValue);
   };
 
-  handleSearchClick = async () => {
-    if (this.state.inputValue) {
-      const data = await getOnePokemon(this.state.inputValue.toLowerCase());
-      this.context.updateData([
+  const handleSearchClick = async () => {
+    if (inputValue) {
+      const data = await getOnePokemon(inputValue.toLowerCase());
+      context.updateData([
         {
           name: data.name,
           url: `https://pokeapi.co/api/v2/pokemon/${data.id}/`,
@@ -50,28 +36,26 @@ export class Header extends React.Component<unknown, HeaderState> {
       ]);
     } else {
       const data = await getPokemons();
-      this.context.updateData(data);
+      context.updateData(data);
     }
   };
 
-  render() {
-    return (
-      <header className="header">
-        <div className="search-wrapper">
-          <ErrorBoundary>
-            <ButtonMistake />
-          </ErrorBoundary>
-          <input
-            className="search-input"
-            value={this.state.inputValue}
-            onChange={this.handleInputChange}
-            placeholder={this.placeholderValue}
-          />
-          <button onClick={this.handleSearchClick} className="search-button">
-            Search
-          </button>
-        </div>
-      </header>
-    );
-  }
-}
+  return (
+    <header className="header">
+      <div className="search-wrapper">
+        <ErrorBoundary>
+          <ButtonMistake />
+        </ErrorBoundary>
+        <input
+          className="search-input"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="Find your pokemon"
+        />
+        <button onClick={handleSearchClick} className="search-button">
+          Search
+        </button>
+      </div>
+    </header>
+  );
+};

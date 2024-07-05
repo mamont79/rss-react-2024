@@ -1,6 +1,7 @@
 .display {
   display: flex;
   flex-wrap: wrap;
+  max-width: 1240px;
   width: 90%;
   gap: 20px;
   justify-content: space-around;

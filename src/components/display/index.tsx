@@ -1,5 +1,5 @@
-import React from 'react';
-import MainContext from '../../pages/mainPage/context';
+import React, { useContext, useEffect } from 'react';
+import MainContext from '../../pages/context';
 import { MainContextType, PokemonUrlData } from '../../types/types';
 import { PokemonCard } from '../card';
 import './style.css';
@@ -7,15 +7,19 @@ import getPokemons from '../../api/getPokemons';
 import getOnePokemon from '../../api/getOnePokemon';
 import { lsItem } from '../../constants/constants';
 
-export class DisplayCards extends React.Component {
-  static contextType = MainContext;
-  declare context: MainContextType;
+export const DisplayCards: React.FC = () => {
+  const context = useContext(MainContext) as MainContextType;
+  const { data } = context;
 
-  componentDidMount = async () => {
+  useEffect(() => {
+    fetchPokemons();
+  });
+
+  const fetchPokemons = async () => {
     const savedSearchPokemon = localStorage.getItem(lsItem);
     if (savedSearchPokemon) {
       const data = await getOnePokemon(savedSearchPokemon.toLowerCase());
-      this.context.updateData([
+      context.updateData([
         {
           name: data.name,
           url: `https://pokeapi.co/api/v2/pokemon/${data.id}/`,
@@ -23,26 +27,22 @@ export class DisplayCards extends React.Component {
       ]);
     } else {
       const data = await getPokemons();
-      this.context.updateData(data);
+      context.updateData(data);
     }
   };
 
-  render() {
-    const { data } = this.context;
-
-    return (
-      <div className="display">
-        {data.map((el: PokemonUrlData) => (
-          <div key={el.name}>
-            <PokemonCard
-              pokemonsCard={{
-                name: el.name,
-                url: el.url,
-              }}
-            />
-          </div>
-        ))}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="display">
+      {data.map((el: PokemonUrlData) => (
+        <div key={el.name}>
+          <PokemonCard
+            pokemonsCard={{
+              name: el.name,
+              url: el.url,
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+};

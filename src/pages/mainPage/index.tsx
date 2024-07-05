@@ -1,31 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Header } from '../../components/header';
 import { DisplayCards } from '../../components/display';
-import MainContext from './context';
+import MainContext from '../context';
 import { MainContextType, PokemonUrlData } from '../../types/types';
 import './style.css';
 
-export class MainPage extends React.Component<unknown, MainContextType> {
-  constructor(props: unknown) {
-    super(props);
-    this.state = {
-      data: [],
-      updateData: this.updateData,
-    };
-  }
+export const MainPage: React.FC = () => {
+  const [data, setData] = useState<Array<PokemonUrlData>>([]);
 
-  updateData = (newData: Array<PokemonUrlData>) => {
-    this.setState({ data: newData });
+  const updateData = (newData: Array<PokemonUrlData>) => {
+    setData(newData);
   };
 
-  render() {
-    return (
-      <MainContext.Provider value={this.state}>
-        <div className="wrapper">
-          <Header />
-          <DisplayCards />
-        </div>
-      </MainContext.Provider>
-    );
-  }
-}
+  const contextValue: MainContextType = {
+    data,
+    updateData,
+  };
+
+  return (
+    <MainContext.Provider value={contextValue}>
+      <div className="wrapper">
+        <Header />
+        <DisplayCards />
+      </div>
+    </MainContext.Provider>
+  );
+};
