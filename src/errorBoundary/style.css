@@ -1,0 +1,7 @@
+.error-content {
+  color: #ff0000;
+  width: 150px;
+  border: solid 2px goldenrod;
+  background: #ffffff;
+  vertical-align: middle;
+}

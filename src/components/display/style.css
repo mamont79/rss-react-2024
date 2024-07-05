@@ -1,0 +1,8 @@
+.display {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  gap: 20px;
+  justify-content: space-around;
+  margin: 15px auto;
+}
