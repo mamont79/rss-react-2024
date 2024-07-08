@@ -16,7 +16,8 @@ export const Header: React.FC = () => {
   useEffect(() => {
     handleSearchClick();
     console.log('it me');
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
