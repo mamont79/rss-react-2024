@@ -9,12 +9,9 @@ export const DisplayCards: React.FC = () => {
   const [pokemonData, setPokemonData] = useState<PokemonUrlData[]>([]);
 
   useEffect(() => {
-    const getData = async () => {
-      setPokemonData(context.data);
-    };
-    getData();
+    setPokemonData(context.data);
     console.log(context.data);
-  });
+  }, [context.data]);
 
   return (
     <div className="display">

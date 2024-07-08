@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { MainContextType } from '../../types/types';
 import MainContext from '../../pages/context';
 import ErrorBoundary from '../../errorBoundary';
@@ -12,6 +12,11 @@ import { lsItem } from '../../constants/constants';
 export const Header: React.FC = () => {
   const context = useContext(MainContext) as MainContextType;
   const [inputValue, setInputValue] = useLocalStorage(lsItem);
+
+  useEffect(() => {
+    handleSearchClick();
+    console.log('it me');
+  });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
