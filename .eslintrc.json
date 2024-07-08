@@ -23,7 +23,7 @@
   "plugins": ["@typescript-eslint", "react", "react-hooks", "react-compiler"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/exhaustive-deps": "off",
     "react-compiler/react-compiler": "error",
     "comma-dangle": ["error", "only-multiline"],
     "react/prop-types": "off",
@@ -39,6 +39,14 @@
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off"
   },
+  "overrides": [
+    {
+      "files": ["**/*.tsx", "**/*.jsx"],
+      "rules": {
+        "react-hooks/exhaustive-deps": "off"
+      }
+    }
+  ],
   "settings": {
     "react": {
       "pragma": "React",

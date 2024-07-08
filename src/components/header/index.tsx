@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { MainContextType } from '../../types/types';
 import MainContext from '../../pages/context';
 import ErrorBoundary from '../../errorBoundary';
@@ -6,23 +6,21 @@ import ButtonMistake from './buttonMistake';
 import './style.css';
 import getOnePokemon from '../../api/getOnePokemon';
 import getPokemons from '../../api/getPokemons';
+import { useLocalStorage } from '../../customHooks/useLocalStorage';
 import { lsItem } from '../../constants/constants';
 
 export const Header: React.FC = () => {
   const context = useContext(MainContext) as MainContextType;
-  const [inputValue, setInputValue] = useState<string>('');
-
-  useEffect(() => {
-    const savedSearchPokemon = localStorage.getItem(lsItem);
-    if (savedSearchPokemon) {
-      setInputValue(savedSearchPokemon);
-    }
-  }, []);
+  const [inputValue, setInputValue] = useLocalStorage(lsItem);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setInputValue(newValue);
-    localStorage.setItem(lsItem, newValue);
+  };
+
+  const handleEnterPress = (event: React.KeyboardEvent) => {
+    const keyPress = event.key;
+    if (keyPress === 'Enter') handleSearchClick();
   };
 
   const handleSearchClick = async () => {
@@ -48,8 +46,9 @@ export const Header: React.FC = () => {
         </ErrorBoundary>
         <input
           className="search-input"
-          value={inputValue}
+          value={inputValue || ''}
           onChange={handleInputChange}
+          onKeyUp={handleEnterPress}
           placeholder="Find your pokemon"
         />
         <button onClick={handleSearchClick} className="search-button">
