@@ -28,8 +28,3 @@ export type PokemonData = {
   name: string;
   types: string;
 };
-
-export type MainContextType = {
-  data: Array<PokemonUrlData>;
-  updateData: (newData: Array<PokemonUrlData>) => void;
-};

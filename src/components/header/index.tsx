@@ -1,47 +1,40 @@
-import React, { useContext, useEffect } from 'react';
-import { MainContextType } from '../../types/types';
-import MainContext from '../../pages/context';
+import React, { useEffect, useState } from 'react';
 import ErrorBoundary from '../../errorBoundary';
 import ButtonMistake from './buttonMistake';
 import './style.css';
-import getOnePokemon from '../../api/getOnePokemon';
-import getPokemons from '../../api/getPokemons';
 import { useLocalStorage } from '../../customHooks/useLocalStorage';
 import { lsItem } from '../../constants/constants';
 
-export const Header: React.FC = () => {
-  const context = useContext(MainContext) as MainContextType;
+interface HeaderProps {
+  changeInput(input: string): void;
+}
+
+export const Header = ({ changeInput }: HeaderProps) => {
   const [inputValue, setInputValue] = useLocalStorage(lsItem);
+  const [valueInInput, setValueInInput] = useState('');
 
   useEffect(() => {
-    handleSearchClick();
-    console.log('it me');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    let start = true;
+    if (start) {
+      setValueInInput(inputValue);
+      start = false;
+    }
+    changeInput(inputValue);
+  }, [changeInput, inputValue]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
-    setInputValue(newValue);
+    setValueInInput(newValue);
   };
 
   const handleEnterPress = (event: React.KeyboardEvent) => {
     const keyPress = event.key;
-    if (keyPress === 'Enter') handleSearchClick();
+    if (keyPress === 'Enter') onSearch();
   };
 
-  const handleSearchClick = async () => {
-    if (inputValue) {
-      const data = await getOnePokemon(inputValue.toLowerCase());
-      context.updateData([
-        {
-          name: data.name,
-          url: `https://pokeapi.co/api/v2/pokemon/${data.id}/`,
-        },
-      ]);
-    } else {
-      const data = await getPokemons();
-      context.updateData(data);
-    }
+  const onSearch = () => {
+    setInputValue(valueInInput);
+    changeInput(inputValue);
   };
 
   return (
@@ -52,12 +45,12 @@ export const Header: React.FC = () => {
         </ErrorBoundary>
         <input
           className="search-input"
-          value={inputValue || ''}
+          value={valueInInput || ''}
           onChange={handleInputChange}
           onKeyUp={handleEnterPress}
           placeholder="Find your pokemon"
         />
-        <button onClick={handleSearchClick} className="search-button">
+        <button onClick={onSearch} className="search-button">
           Search
         </button>
       </div>

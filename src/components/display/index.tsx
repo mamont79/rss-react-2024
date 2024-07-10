@@ -1,18 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import MainContext from '../../pages/context';
-import { MainContextType, PokemonUrlData } from '../../types/types';
+import { PokemonUrlData } from '../../types/types';
 import { PokemonCard } from '../card';
 import './style.css';
 
-export const DisplayCards: React.FC = () => {
-  const context = useContext(MainContext) as MainContextType;
-  const [pokemonData, setPokemonData] = useState<PokemonUrlData[]>([]);
+type PokemonDataType = {
+  pokemonData: PokemonUrlData[];
+};
 
-  useEffect(() => {
-    setPokemonData(context.data);
-    console.log(context.data);
-  }, [context.data]);
-
+export const DisplayCards = ({ pokemonData }: PokemonDataType) => {
   return (
     <div className="display">
       {pokemonData.map((el: PokemonUrlData) => (
