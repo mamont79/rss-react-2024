@@ -7,10 +7,12 @@ import getPokemons from '../../api/getPokemons';
 import { useLocalStorage } from '../../customHooks/useLocalStorage';
 import { lsItem } from '../../constants/constants';
 import { PokemonUrlData } from '../../types/types';
+import { Pagination } from '../../components/pagination/pagination';
 
 export const MainPage: React.FC = () => {
   const [inputValue, setInputValue] = useLocalStorage(lsItem);
   const [pokemonData, setPokemonData] = useState<PokemonUrlData[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleSearchClick = useCallback(async () => {
     if (inputValue) {
@@ -24,11 +26,11 @@ export const MainPage: React.FC = () => {
       ];
       setPokemonData(searchedPokemon);
     } else {
-      const data = await getPokemons();
+      const data = await getPokemons(currentPage);
       console.log(data);
       setPokemonData(data);
     }
-  }, [inputValue]);
+  }, [inputValue, currentPage]);
 
   useEffect(() => {
     console.log(inputValue);
@@ -39,9 +41,14 @@ export const MainPage: React.FC = () => {
     setInputValue(input);
   };
 
+  const handleCurrentPage = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="wrapper">
       <Header changeInput={handleInput} />
+      <Pagination currentPage={currentPage} changePage={handleCurrentPage} />
       <DisplayCards pokemonData={pokemonData} />
     </div>
   );
