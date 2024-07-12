@@ -13,10 +13,14 @@ export const Pagination = ({
 }: PaginationProps) => {
   const pagesArray: number[] = makeArray(currentPage);
 
+  const handleCurrentPage = (page: number) => {
+    return () => changePage(page);
+  };
+
   return (
     <div className="pagination-wrapper">
       {pagesArray.map((page: number) => (
-        <div key={page} onClick={() => changePage(page)}>
+        <div key={page} onClick={handleCurrentPage(page)}>
           <PageLink page={page} isActive={page === currentPage} />
         </div>
       ))}

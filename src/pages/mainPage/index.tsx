@@ -8,11 +8,17 @@ import { useLocalStorage } from '../../customHooks/useLocalStorage';
 import { lsItem } from '../../constants/constants';
 import { PokemonUrlData } from '../../types/types';
 import { Pagination } from '../../components/pagination/pagination';
+import { useNavigate, useParams } from 'react-router-dom';
+import { OutOfAmount } from '../outOfAmount/outOfAmount';
 
 export const MainPage: React.FC = () => {
+  const { page } = useParams<{ page?: string }>();
+  const navigate = useNavigate();
+  const pageFromParams = page ? parseInt(page, 10) : 1;
+  const maxPage = 66;
   const [inputValue, setInputValue] = useLocalStorage(lsItem);
   const [pokemonData, setPokemonData] = useState<PokemonUrlData[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(pageFromParams);
 
   const handleSearchClick = useCallback(async () => {
     if (inputValue) {
@@ -26,16 +32,11 @@ export const MainPage: React.FC = () => {
       ];
       setPokemonData(searchedPokemon);
     } else {
-      const data = await getPokemons(currentPage);
+      const data = await getPokemons(Number(page));
       console.log(data);
       setPokemonData(data);
     }
-  }, [inputValue, currentPage]);
-
-  useEffect(() => {
-    console.log(inputValue);
-    handleSearchClick();
-  }, [handleSearchClick, inputValue]);
+  }, [inputValue, page]);
 
   const handleInput = (input: string) => {
     setInputValue(input);
@@ -43,13 +44,22 @@ export const MainPage: React.FC = () => {
 
   const handleCurrentPage = (page: number) => {
     setCurrentPage(page);
+    navigate(`/page/${page}`);
   };
+
+  useEffect(() => {
+    handleSearchClick();
+  }, [handleSearchClick, inputValue]);
 
   return (
     <div className="wrapper">
       <Header changeInput={handleInput} />
       <Pagination currentPage={currentPage} changePage={handleCurrentPage} />
-      <DisplayCards pokemonData={pokemonData} />
+      {Number(page) <= maxPage ? (
+        <DisplayCards pokemonData={pokemonData} />
+      ) : (
+        <OutOfAmount />
+      )}
     </div>
   );
 };

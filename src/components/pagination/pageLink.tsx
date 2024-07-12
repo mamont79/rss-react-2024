@@ -6,7 +6,6 @@ type PageLinkProps = {
 };
 
 export const PageLink = ({ page, isActive }: PageLinkProps) => {
-  console.log(isActive);
   return (
     <div className={`page-number ${isActive ? 'active' : ''}`}>{page}</div>
   );

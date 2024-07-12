@@ -7,6 +7,7 @@ import { ErrorNotFoundPage } from './pages/errorPage/errorPage';
 
 const router = createBrowserRouter([
   { path: '/', element: <MainPage /> },
+  { path: '/page/:page', element: <MainPage /> },
   { path: '*', element: <ErrorNotFoundPage /> },
 ]);
 
