@@ -10,6 +10,7 @@ import { PokemonUrlData } from '../../types/types';
 import { Pagination } from '../../components/pagination/pagination';
 import { useNavigate, useParams } from 'react-router-dom';
 import { OutOfAmount } from '../outOfAmount/outOfAmount';
+import { DetailedCard } from '../../components/detailedCard/detailedCard';
 
 export const MainPage: React.FC = () => {
   const { page } = useParams<{ page?: string }>();
@@ -19,6 +20,8 @@ export const MainPage: React.FC = () => {
   const [inputValue, setInputValue] = useLocalStorage(lsItem);
   const [pokemonData, setPokemonData] = useState<PokemonUrlData[]>([]);
   const [currentPage, setCurrentPage] = useState(pageFromParams);
+  const [isActive, changeIsActive] = useState(false);
+  const [currentPokemonId, setCurrentPokemonId] = useState<number | null>(null);
 
   const handleSearchClick = useCallback(async () => {
     if (inputValue) {
@@ -42,24 +45,46 @@ export const MainPage: React.FC = () => {
     setInputValue(input);
   };
 
+  const handleActivDetailedCard = (status: boolean) => {
+    changeIsActive(status);
+  };
+
+  const setCurrentPokemon = (pokemonId: number) => {
+    console.log(pokemonId);
+    setCurrentPokemonId(pokemonId);
+  };
+
   const handleCurrentPage = (page: number) => {
     setCurrentPage(page);
     navigate(`/page/${page}`);
   };
 
   useEffect(() => {
+    changeIsActive(currentPokemonId ? true : false);
     handleSearchClick();
-  }, [handleSearchClick, inputValue]);
+  }, [handleSearchClick, inputValue, currentPokemonId]);
 
   return (
     <div className="wrapper">
       <Header changeInput={handleInput} />
       <Pagination currentPage={currentPage} changePage={handleCurrentPage} />
-      {Number(page) <= maxPage ? (
-        <DisplayCards pokemonData={pokemonData} />
-      ) : (
-        <OutOfAmount />
-      )}
+      <main className="main-wrapper">
+        {Number(page) <= maxPage ? (
+          <DisplayCards
+            pokemonData={pokemonData}
+            getCurrentId={setCurrentPokemon}
+          />
+        ) : (
+          <OutOfAmount />
+        )}
+        {isActive ? (
+          <DetailedCard
+            changeActive={handleActivDetailedCard}
+            destroyPokemon={setCurrentPokemon}
+            pokemonId={currentPokemonId}
+          />
+        ) : null}
+      </main>
     </div>
   );
 };
