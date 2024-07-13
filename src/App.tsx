@@ -9,12 +9,15 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { ErrorNotFoundPage } from './pages/errorPage/errorPage';
+import { DetailedCard } from './components/detailedCard/detailedCard';
 import { DisplayCards } from './components/display';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainPage />}>
-      <Route path="page/:page" element={<DisplayCards />} />
+      <Route path="page/:page" element={<DisplayCards />}>
+        <Route path="details/:id" element={<DetailedCard />} />
+      </Route>
       <Route path="*" element={<ErrorNotFoundPage />} />
     </Route>
   )

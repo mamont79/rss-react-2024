@@ -26,7 +26,6 @@ export const MainPage: React.FC = () => {
   const handleSearchClick = useCallback(async () => {
     if (inputValue) {
       const data = await getOnePokemon(inputValue.toLowerCase());
-      console.log(data);
       const searchedPokemon = [
         {
           name: data.name,
@@ -36,7 +35,6 @@ export const MainPage: React.FC = () => {
       setPokemonData(searchedPokemon);
     } else {
       const data = await getPokemons(Number(page));
-      console.log(data);
       setPokemonData(data);
     }
   }, [inputValue, page]);
@@ -50,13 +48,17 @@ export const MainPage: React.FC = () => {
   };
 
   const setCurrentPokemon = (pokemonId: number) => {
-    console.log(pokemonId);
     setCurrentPokemonId(pokemonId);
   };
 
   const handleCurrentPage = (page: number) => {
     setCurrentPage(page);
     navigate(`/page/${page}`);
+  };
+
+  const handleMainSectionClick = (event: { stopPropagation: () => void }) => {
+    event.stopPropagation();
+    changeIsActive(false);
   };
 
   useEffect(() => {
@@ -69,14 +71,16 @@ export const MainPage: React.FC = () => {
       <Header changeInput={handleInput} />
       <Pagination currentPage={currentPage} changePage={handleCurrentPage} />
       <main className="main-wrapper">
-        {Number(page) <= maxPage ? (
-          <DisplayCards
-            pokemonData={pokemonData}
-            getCurrentId={setCurrentPokemon}
-          />
-        ) : (
-          <OutOfAmount />
-        )}
+        <div className='sub-wrapper' onClick={handleMainSectionClick}>
+          {Number(page) <= maxPage ? (
+            <DisplayCards
+              pokemonData={pokemonData}
+              getCurrentId={setCurrentPokemon}
+            />
+          ) : (
+            <OutOfAmount />
+          )}
+        </div>
         {isActive ? (
           <DetailedCard
             changeActive={handleActivDetailedCard}
