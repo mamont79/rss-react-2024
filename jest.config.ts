@@ -1,7 +1,11 @@
 export {};
 module.exports = {
-  collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts', '!**/vendor/**'],
+  collectCoverage: false,
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx,js,jsx}',
+    '!src/**/*.d.ts',
+    '!**/vendor/**',
+  ],
   coverageDirectory: 'coverage',
   testEnvironment: 'jsdom',
   transform: {
@@ -14,9 +18,10 @@ module.exports = {
     'package.json',
     'package-lock.json',
     'reportWebVitals.ts',
-    'setupTests.ts',
+    'jest.setup.ts',
     'index.tsx',
   ],
 
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 };

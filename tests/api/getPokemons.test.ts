@@ -15,3 +15,9 @@ it('should return a successful response', async () => {
 
   expect(mockResponse.data.results).toEqual(pokemonData);
 });
+
+it('should throw an error when the request fails', async () => {
+  (instance.get as jest.Mock).mockRejectedValue(new Error('Network Error'));
+
+  await expect(getPokemons()).rejects.toThrow("Can't get data");
+});
