@@ -1,4 +1,7 @@
 export const lsItem = 'searchPokemon';
+
 export const currentPage = 'currentPage';
 
 export const apiLink = 'https://pokeapi.co/api/v2/pokemon/';
+
+export const maxPage = 66;

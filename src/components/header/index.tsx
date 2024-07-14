@@ -4,6 +4,7 @@ import ButtonMistake from './buttonMistake';
 import './style.css';
 import { useLocalStorage } from '../../customHooks/useLocalStorage';
 import { lsItem } from '../../constants/constants';
+import { useSearchParams } from 'react-router-dom';
 
 interface HeaderProps {
   changeInput(input: string): void;
@@ -12,15 +13,17 @@ interface HeaderProps {
 export const Header = ({ changeInput }: HeaderProps) => {
   const [inputValue, setInputValue] = useLocalStorage(lsItem);
   const [valueInInput, setValueInInput] = useState('');
+  const [, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     let start = true;
     if (start) {
       setValueInInput(inputValue);
       start = false;
+      if (inputValue) setSearchParams({ search: inputValue });
+      if (!inputValue) setSearchParams({});
     }
-    changeInput(inputValue);
-  }, [changeInput, inputValue]);
+  }, [inputValue, setSearchParams]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -34,7 +37,9 @@ export const Header = ({ changeInput }: HeaderProps) => {
 
   const onSearch = () => {
     setInputValue(valueInInput);
-    changeInput(inputValue);
+    if (valueInInput) setSearchParams({ search: valueInInput });
+    if (!valueInInput) setSearchParams({});
+    changeInput(valueInInput);
   };
 
   return (

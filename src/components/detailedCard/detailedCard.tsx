@@ -1,32 +1,33 @@
 import { useEffect, useState } from 'react';
 import getOnePokemon from '../../api/getOnePokemon';
-import { DetailedProps, PokemonDetailedType, StatsType } from './types';
+import { PokemonDetailedType, StatsType } from './types';
 import { LoaderCard } from '../card/loader';
 import './style.css';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export const DetailedCard = ({
-  changeActive,
-  destroyPokemon,
-  pokemonId,
-}: DetailedProps) => {
+export const DetailedCard = () => {
+  const params = useParams<Record<string, string>>();
+  const { page, details } = params;
+  const navigate = useNavigate();
+
   const [pokemon, setPokemon] = useState<PokemonDetailedType | null>();
   const [state, setState] = useState<boolean>(true);
 
   useEffect(() => {
+    console.log(details);
     const fetchData = async () => {
-      if (pokemonId) {
-        const data = await getOnePokemon(pokemonId);
-        
+      if (details) {
+        const data = await getOnePokemon(details);
+
         setPokemon(data);
         setState(false);
       }
     };
     fetchData();
-  }, [pokemonId]);
+  }, [details]);
 
   const onCloseCard = () => {
-    changeActive!(false);
-    destroyPokemon!(null);
+    navigate(`/page/${page}`);
   };
 
   return (

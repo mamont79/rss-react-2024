@@ -1,4 +1,4 @@
-import { MainPage } from './pages/mainPage';
+import { MainPage, PageWrapper } from './pages/mainPage';
 import './App.css';
 import ErrorBoundary from './errorBoundary';
 
@@ -15,8 +15,9 @@ import { DisplayCards } from './components/display';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainPage />}>
-      <Route path="page/:page" element={<DisplayCards />}>
-        <Route path="details/:id" element={<DetailedCard />} />
+      <Route path="page/:page" element={<PageWrapper />}>
+        <Route path="" element={<DisplayCards />} />
+        <Route path="details/:details" element={<DetailedCard />} />
       </Route>
       <Route path="*" element={<ErrorNotFoundPage />} />
     </Route>
