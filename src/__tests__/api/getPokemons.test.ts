@@ -1,6 +1,6 @@
-import instance from '../../src/api/instance';
-import getPokemons from '../../src/api/getPokemons';
-jest.mock('../../src/api/instance.ts');
+import instance from '../../api/instance';
+import getPokemons from '../../api/getPokemons';
+jest.mock('../../api/instance.ts');
 
 it('should return a successful response', async () => {
   const mockResponse = {

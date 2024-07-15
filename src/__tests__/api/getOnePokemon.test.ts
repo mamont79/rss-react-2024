@@ -1,6 +1,6 @@
-import instance from '../../src/api/instance';
-import getOnePokemon from '../../src/api/getOnePokemon';
-jest.mock('../../src/api/instance');
+import instance from '../../api/instance';
+import getOnePokemon from '../../api/getOnePokemon';
+jest.mock('../../api/instance');
 
 describe('getOnePokemon', () => {
   it('should return a successful response for a given Pokemon ID', async () => {

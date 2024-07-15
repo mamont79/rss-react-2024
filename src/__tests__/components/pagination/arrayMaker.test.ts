@@ -1,4 +1,4 @@
-import { makeArray } from '../../../src/components/pagination/arrayMaker';
+import { makeArray } from '../../../components/pagination/arrayMaker';
 
 describe('makeArray', () => {
   it('should return an array starting from 1 if initNumber is less than 5', () => {
