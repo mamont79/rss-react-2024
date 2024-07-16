@@ -1,5 +1,7 @@
 export {};
 module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
   collectCoverage: false,
   collectCoverageFrom: [
     'src/**/*.{ts,tsx,js,jsx}',
@@ -7,9 +9,12 @@ module.exports = {
     '!**/vendor/**',
   ],
   coverageDirectory: 'coverage',
-  testEnvironment: 'jsdom',
   transform: {
     '.(ts|tsx)': 'ts-jest',
+  },
+  moduleNameMapper: {
+    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/src/test/__ mocks __/fileMock.js',
+    '\\.(css|less)$': '<rootDir>/src/test/__ mocks __/styleMock.js',
   },
 
   coveragePathIgnorePatterns: [
@@ -19,7 +24,11 @@ module.exports = {
     'package-lock.json',
     'reportWebVitals.ts',
     'jest.setup.ts',
+    'src/main.tsx',
+    'src/App.tsx',
     'index.tsx',
+    'src/test',
+    'src/customHooks',
   ],
 
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
