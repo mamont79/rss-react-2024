@@ -45,13 +45,6 @@
       "rules": {
         "react-hooks/exhaustive-deps": "off"
       }
-    },
-    {
-      "files": ["tests/**/*"],
-      "plugins": ["jest"],
-      "env": {
-        "jest/globals": true
-      }
     }
   ],
   "settings": {
