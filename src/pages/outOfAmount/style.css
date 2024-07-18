@@ -1,0 +1,19 @@
+.out-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  max-width: 500px;
+  height: 200px;
+  margin: 70px auto;
+}
+
+.out-text {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.link {
+  text-decoration: underline;
+  color: rgb(223, 87, 8);
+  cursor: pointer;
+}

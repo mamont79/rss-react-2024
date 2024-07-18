@@ -1,29 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.css';
 
-type ButtonState = {
-  buttonValue: string;
-};
+const ButtonMistake: React.FC = () => {
+  const [buttonValue, setButtonValue] = useState('Mistake');
 
-class ButtonMistake extends React.Component<unknown, ButtonState> {
-  constructor(props: unknown) {
-    super(props);
-    this.state = { buttonValue: 'Mistake' };
-  }
-
-  handleError = (): void => {
-    this.setState({ buttonValue: 'error' }, () => {
-      throw new Error('Ok, ErrorBoundary works well :-)');
-    });
+  const handleError = (): void => {
+    setButtonValue('error');
+    throw new Error('Ok, ErrorBoundary works well :-)');
   };
 
-  render() {
-    return (
-      <button onClick={this.handleError} className="mistake-button">
-        {this.state.buttonValue}
-      </button>
-    );
-  }
-}
+  return (
+    <button onClick={handleError} className="mistake-button">
+      {buttonValue}
+    </button>
+  );
+};
 
 export default ButtonMistake;

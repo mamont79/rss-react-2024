@@ -1,0 +1,36 @@
+.detailed-card {
+  position: relative;
+  width: 30%;
+  min-width: 250px;
+  max-width: 350px;
+  border: 4px solid orange;
+  border-radius: 15px;
+  margin-top: 15px;
+  padding: 30px 15px;
+  box-sizing: border-box;
+  height: fit-content;
+}
+
+.detailed-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.stat {
+  text-transform: capitalize;
+  font-size: 16px;
+}
+
+.detailed-close {
+  position: absolute;
+  width: 70px;
+  top: 5px;
+  right: 5px;
+  border-radius: 10px;
+  transition: all 0.5s;
+}
+
+.detailed-close:hover {
+  cursor: pointer;
+  background: rgb(255, 176, 66);
+}

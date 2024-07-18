@@ -1,31 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from '../../components/header';
 import { DisplayCards } from '../../components/display';
-import MainContext from './context';
-import { MainContextType, PokemonUrlData } from '../../types/types';
 import './style.css';
+import { useLocalStorage } from '../../customHooks/useLocalStorage';
+import { lsItem, maxPage } from '../../constants/constants';
+import { Pagination } from '../../components/pagination/pagination';
+import {
+  Outlet,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
+import { OutOfAmount } from '../outOfAmount/outOfAmount';
 
-export class MainPage extends React.Component<unknown, MainContextType> {
-  constructor(props: unknown) {
-    super(props);
-    this.state = {
-      data: [],
-      updateData: this.updateData,
-    };
-  }
+export const MainPage: React.FC = () => {
+  const params = useParams<Record<string, string>>();
+  const { page, details } = params;
+  const navigate = useNavigate();
+  const pageFromParams = page ? parseInt(page, 10) : 1;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setInputValue] = useLocalStorage(lsItem);
+  const [currentPage, setCurrentPage] = useState(pageFromParams);
 
-  updateData = (newData: Array<PokemonUrlData>) => {
-    this.setState({ data: newData });
+  const handleInput = (input: string) => {
+    setInputValue(input);
+    if (input) setSearchParams({ search: input });
   };
 
-  render() {
-    return (
-      <MainContext.Provider value={this.state}>
-        <div className="wrapper">
-          <Header />
-          <DisplayCards />
+  const handleCurrentPage = (page: number) => {
+    setCurrentPage(page);
+    navigate(`/page/${page}`);
+  };
+
+  const handleMainSectionClick = () => {
+    if (details) navigate(`/page/${page}/`);
+  };
+
+  useEffect(() => {
+    if (!page) navigate(`/page/1`);
+    console.log(searchParams);
+  }, [navigate, page, searchParams]);
+
+  return (
+    <div className="wrapper">
+      <Header changeInput={handleInput} />
+      <Pagination currentPage={currentPage} changePage={handleCurrentPage} />
+      <main className="main-wrapper">
+        <div className="sub-wrapper" onClick={handleMainSectionClick}>
+          {Number(page) <= maxPage ? <Outlet /> : <OutOfAmount />}
         </div>
-      </MainContext.Provider>
-    );
-  }
-}
+      </main>
+    </div>
+  );
+};
+
+export const PageWrapper: React.FC = () => {
+  const params = useParams<Record<string, string>>();
+  const { details } = params;
+
+  return (
+    <div className="sub-wrapper">
+      <DisplayCards />
+      {details && <Outlet />}
+    </div>
+  );
+};
