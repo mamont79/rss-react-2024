@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1721088178387" clover="3.2.0">
-  <project timestamp="1721088178388" name="All files">
-    <metrics statements="84" coveredstatements="73" conditionals="10" coveredconditionals="9" methods="19" coveredmethods="14" elements="113" coveredelements="96" complexity="0" loc="84" ncloc="84" packages="8" files="12" classes="12"/>
+<coverage generated="1721416341535" clover="3.2.0">
+  <project timestamp="1721416341536" name="All files">
+    <metrics statements="113" coveredstatements="113" conditionals="14" coveredconditionals="13" methods="22" coveredmethods="22" elements="149" coveredelements="148" complexity="0" loc="113" ncloc="113" packages="9" files="14" classes="14"/>
     <package name="api">
       <metrics statements="21" coveredstatements="21" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
       <file name="getOnePokemon.ts" path="E:\RSSchool\rss-react-2024\src\api\getOnePokemon.ts">
@@ -74,30 +74,38 @@
       </file>
     </package>
     <package name="components.header">
-      <metrics statements="9" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
-      <file name="buttonMistake.tsx" path="E:\RSSchool\rss-react-2024\src\components\header\buttonMistake.tsx">
-        <metrics statements="9" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+      <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <file name="themeButton.tsx" path="E:\RSSchool\rss-react-2024\src\components\header\themeButton.tsx">
+        <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
       </file>
     </package>
     <package name="components.pagination">
-      <metrics statements="18" coveredstatements="9" conditionals="6" coveredconditionals="5" methods="7" coveredmethods="3"/>
+      <metrics statements="24" coveredstatements="24" conditionals="6" coveredconditionals="5" methods="7" coveredmethods="7"/>
       <file name="arrayMaker.ts" path="E:\RSSchool\rss-react-2024\src\components\pagination\arrayMaker.ts">
-        <metrics statements="6" coveredstatements="6" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <metrics statements="12" coveredstatements="12" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
-        <line num="2" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="3" count="9" type="cond" truecount="1" falsecount="0"/>
-        <line num="4" count="9" type="stmt"/>
-        <line num="5" count="81" type="stmt"/>
-        <line num="6" count="9" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="9" type="cond" truecount="1" falsecount="0"/>
+        <line num="11" count="9" type="stmt"/>
+        <line num="12" count="81" type="stmt"/>
+        <line num="13" count="9" type="stmt"/>
       </file>
       <file name="pageLink.tsx" path="E:\RSSchool\rss-react-2024\src\components\pagination\pageLink.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
@@ -106,26 +114,56 @@
         <line num="9" count="2" type="stmt"/>
       </file>
       <file name="pagination.tsx" path="E:\RSSchool\rss-react-2024\src\components\pagination\pagination.tsx">
-        <metrics statements="9" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
+        <metrics statements="9" coveredstatements="9" conditionals="1" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="17" count="15" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="23" count="15" type="stmt"/>
       </file>
     </package>
     <package name="constants">
-      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="constants.ts" path="E:\RSSchool\rss-react-2024\src\constants\constants.ts">
-        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="3" type="stmt"/>
-        <line num="3" count="3" type="stmt"/>
-        <line num="5" count="3" type="stmt"/>
-        <line num="7" count="3" type="stmt"/>
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="context">
+      <metrics statements="20" coveredstatements="20" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+      <file name="context.tsx" path="E:\RSSchool\rss-react-2024\src\context\context.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="6" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="26" count="6" type="stmt"/>
+      </file>
+      <file name="contextTypes.ts" path="E:\RSSchool\rss-react-2024\src\context\contextTypes.ts">
+        <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="5" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
       </file>
     </package>
     <package name="pages.errorPage">

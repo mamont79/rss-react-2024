@@ -29,6 +29,7 @@ module.exports = {
     'index.tsx',
     'src/test',
     'src/customHooks',
+    'src/components/header/buttonMistake.tsx',
   ],
 
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
