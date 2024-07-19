@@ -11,6 +11,8 @@ import {
 import { ErrorNotFoundPage } from './pages/errorPage/errorPage';
 import { DetailedCard } from './components/detailedCard/detailedCard';
 import { DisplayCards } from './components/display';
+import { ThemeProvider} from './context/context';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,7 +29,9 @@ const router = createBrowserRouter(
 export const App = () => {
   return (
     <ErrorBoundary>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </ErrorBoundary>
   );
 };

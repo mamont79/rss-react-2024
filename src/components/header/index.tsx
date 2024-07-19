@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import ErrorBoundary from '../../errorBoundary';
-import ButtonMistake from './buttonMistake';
 import './style.css';
 import { useLocalStorage } from '../../customHooks/useLocalStorage';
-import { lsItem } from '../../constants/constants';
+import { LS_ITEM } from '../../constants/constants';
 import { useSearchParams } from 'react-router-dom';
+import { ThemeButton } from './themeButton';
 
 interface HeaderProps {
   changeInput(input: string): void;
 }
 
 export const Header = ({ changeInput }: HeaderProps) => {
-  const [inputValue, setInputValue] = useLocalStorage(lsItem);
+  const [inputValue, setInputValue] = useLocalStorage(LS_ITEM);
   const [valueInInput, setValueInInput] = useState('');
   const [, setSearchParams] = useSearchParams();
 
@@ -45,9 +44,7 @@ export const Header = ({ changeInput }: HeaderProps) => {
   return (
     <header className="header">
       <div className="search-wrapper">
-        <ErrorBoundary>
-          <ButtonMistake />
-        </ErrorBoundary>
+        <ThemeButton />
         <input
           className="search-input"
           value={valueInInput || ''}

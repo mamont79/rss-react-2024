@@ -1,11 +1,14 @@
 .wrapper {
   padding: 0;
+  background-color: var(--wrapper);
 }
 
 .main-wrapper {
   display: flex;
   flex-wrap: nowrap;
-  width: 90%;
+  width: 100%;
+  padding-inline: 15px;
+  box-sizing: border-box;
   margin-inline: auto;
 }
 

@@ -4,7 +4,8 @@
   padding: 16px;
   border: solid 4px goldenrod;
   border-radius: 15px;
-  background: rgb(252, 229, 82);
+  background: linear-gradient(120deg, var(--gradstart), var(--gradend));
+  color: var(--wrapper);
 }
 
 .pokemon-name {
