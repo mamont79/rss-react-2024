@@ -4,10 +4,11 @@ import { PokemonCard } from '../card';
 import './style.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { LoaderCard } from '../card/loader';
 
 export const DisplayCards = () => {
-  const pokemonsData = useSelector(
-    (state: RootState) => state.pokemons.pokemonData
+  const { pokemonData, isLoading } = useSelector(
+    (state: RootState) => state.pokemons
   );
 
   const params = useParams<Record<string, string>>();
@@ -21,16 +22,20 @@ export const DisplayCards = () => {
 
   return (
     <div className="display">
-      {pokemonsData.map((el: PokemonUrlData) => (
-        <div key={el.name} onClick={setCurrentId(el.url)}>
-          <PokemonCard
-            pokemonsCard={{
-              name: el.name,
-              url: el.url,
-            }}
-          />
-        </div>
-      ))}
+      {isLoading ? (
+        <LoaderCard />
+      ) : (
+        pokemonData.map((el: PokemonUrlData) => (
+          <div key={el.name} onClick={setCurrentId(el.url)}>
+            <PokemonCard
+              pokemonsCard={{
+                name: el.name,
+                url: el.url,
+              }}
+            />
+          </div>
+        ))
+      )}
     </div>
   );
 };

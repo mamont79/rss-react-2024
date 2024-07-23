@@ -2,8 +2,14 @@ import React, { useEffect, useState } from 'react';
 import './style.css';
 import { useLocalStorage } from '../../customHooks/useLocalStorage';
 import { LS_ITEM } from '../../constants/constants';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { ThemeButton } from './themeButton';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import {
+  getOnePokemonAsync,
+  getPokemonsAsync,
+} from '../../store/pokemons/pokemonSlice';
 
 interface HeaderProps {
   changeInput(input: string): void;
@@ -13,6 +19,9 @@ export const Header = ({ changeInput }: HeaderProps) => {
   const [inputValue, setInputValue] = useLocalStorage(LS_ITEM);
   const [valueInInput, setValueInInput] = useState('');
   const [, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const params = useParams<Record<string, string>>();
+  const { page } = params;
 
   useEffect(() => {
     let start = true;
@@ -34,10 +43,16 @@ export const Header = ({ changeInput }: HeaderProps) => {
     if (keyPress === 'Enter') onSearch();
   };
 
-  const onSearch = () => {
+  const onSearch = async () => {
     setInputValue(valueInInput);
-    if (valueInInput) setSearchParams({ search: valueInInput });
-    if (!valueInInput) setSearchParams({});
+    if (valueInInput) {
+      setSearchParams({ search: valueInInput });
+      await dispatch(getOnePokemonAsync(valueInInput));
+    }
+    if (!valueInInput) {
+      setSearchParams({});
+      await dispatch(getPokemonsAsync(Number(page)));
+    }
     changeInput(valueInInput);
   };
 
