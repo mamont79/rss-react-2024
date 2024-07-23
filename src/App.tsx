@@ -1,7 +1,6 @@
 import { MainPage, PageWrapper } from './pages/mainPage';
 import './App.css';
 import ErrorBoundary from './errorBoundary';
-
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -11,8 +10,9 @@ import {
 import { ErrorNotFoundPage } from './pages/errorPage/errorPage';
 import { DetailedCard } from './components/detailedCard/detailedCard';
 import { DisplayCards } from './components/display';
-import { ThemeProvider} from './context/context';
-
+import { ThemeProvider } from './context/context';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,9 +29,11 @@ const router = createBrowserRouter(
 export const App = () => {
   return (
     <ErrorBoundary>
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>
     </ErrorBoundary>
   );
 };

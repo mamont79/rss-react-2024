@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useState } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { Header } from '../../components/header';
 import { DisplayCards } from '../../components/display';
 import './style.css';
@@ -14,8 +14,15 @@ import {
 import { OutOfAmount } from '../outOfAmount/outOfAmount';
 import { useTheme } from '../../context/context';
 import { ThemeType } from '../../context/contextTypes';
+import { useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { useDispatch } from 'react-redux';
+import { getPokemonsAsync } from '../../store/pokemons/pokemonSlice';
 
 export const MainPage: React.FC = () => {
+  const pokemons = useSelector((state: RootState) => state.pokemons);
+  const dispatch = useDispatch<AppDispatch>();
+
   const { theme, setCurrentTheme } = useTheme();
   const params = useParams<Record<string, string>>();
   const { page, details } = params;
@@ -40,6 +47,18 @@ export const MainPage: React.FC = () => {
     if (details) navigate(`/page/${page}/`);
   };
 
+  const fetchPokemons = useCallback(
+    async (page: number) => {
+      await dispatch(getPokemonsAsync(page));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    if (page) fetchPokemons(Number(page));
+    else fetchPokemons(1);
+  }, [fetchPokemons, page]);
+
   useEffect(() => {
     const check = lsTheme as ThemeType;
     if (check === 'golden') setCurrentTheme(check);
@@ -48,7 +67,7 @@ export const MainPage: React.FC = () => {
   useEffect(() => {
     if (!page) navigate(`/page/1`);
     console.log(searchParams);
-  }, [navigate, page, searchParams]);
+  }, [navigate, page, pokemons, searchParams]);
 
   return (
     <div className="wrapper" style={{ ...(theme as CSSProperties) }}>
