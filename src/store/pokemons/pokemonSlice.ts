@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PokemonUrlData } from '../../types/types';
-import { getTotalPokemons } from '../../api/getPokemons';
+import getPokemons from '../../api/getPokemons';
 import getOnePokemon from '../../api/getOnePokemon';
 
 type PokemonState = {
@@ -27,20 +27,28 @@ const pokemonSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      getPokemonsAsync.fulfilled,
-      (state, action: PayloadAction<PokemonUrlData[]>) => {
-        state.pokemonData = [...action.payload];
-        state.isLoading = false;
-      }
-    );
-    builder.addCase(
-      getOnePokemonAsync.fulfilled,
-      (state, action: PayloadAction<PokemonUrlData[]>) => {
-        state.pokemonData = [...action.payload];
-        state.isLoading = false;
-      }
-    );
+    builder
+      .addCase(getPokemonsAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(
+        getPokemonsAsync.fulfilled,
+        (state, action: PayloadAction<PokemonUrlData[]>) => {
+          state.pokemonData = [...action.payload];
+          state.isLoading = false;
+        }
+      );
+    builder
+      .addCase(getOnePokemonAsync.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(
+        getOnePokemonAsync.fulfilled,
+        (state, action: PayloadAction<PokemonUrlData[]>) => {
+          state.pokemonData = [...action.payload];
+          state.isLoading = false;
+        }
+      );
   },
 });
 
@@ -49,7 +57,7 @@ export const getPokemonsAsync = createAsyncThunk<
   number,
   { rejectValue: string }
 >('pokemons/getPokemonsAsync', async (currentPage: number, { dispatch }) => {
-  const totalData = await getTotalPokemons(currentPage);
+  const totalData = await getPokemons(currentPage);
   dispatch(setTotalAmount(totalData.count));
   return totalData.results;
 });

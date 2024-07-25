@@ -13,7 +13,10 @@ export type PokemonSearchProps = {
 
 export type DisplayProps = { pokemonsData: PokemonData[] };
 
-export type PokemonCardProps = { pokemonsCard: PokemonUrlData };
+export type PokemonCardProps = {
+  pokemonsCard: PokemonUrlData;
+  onCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
 export type PokemonSearchState = {
   searchValue: string;

@@ -25,7 +25,7 @@ export const MainPage: React.FC = () => {
 
   const { theme, setCurrentTheme } = useTheme();
   const params = useParams<Record<string, string>>();
-  const { page, details } = params;
+  const { page } = params;
   const navigate = useNavigate();
   const pageFromParams = page ? parseInt(page, 10) : 1;
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,10 +41,6 @@ export const MainPage: React.FC = () => {
   const handleCurrentPage = (page: number) => {
     setCurrentPage(page);
     navigate(`/page/${page}`);
-  };
-
-  const handleMainSectionClick = () => {
-    if (details) navigate(`/page/${page}/`);
   };
 
   const fetchPokemons = useCallback(
@@ -66,7 +62,6 @@ export const MainPage: React.FC = () => {
 
   useEffect(() => {
     if (!page) navigate(`/page/1`);
-    console.log(searchParams);
   }, [navigate, page, pokemons, searchParams]);
 
   return (
@@ -74,7 +69,7 @@ export const MainPage: React.FC = () => {
       <Header changeInput={handleInput} />
       <Pagination currentPage={currentPage} changePage={handleCurrentPage} />
       <main className="main-wrapper">
-        <div className="sub-wrapper" onClick={handleMainSectionClick}>
+        <div className="sub-wrapper">
           {Number(page) <= MAX_PAGE ? <Outlet /> : <OutOfAmount />}
         </div>
       </main>

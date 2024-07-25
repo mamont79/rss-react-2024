@@ -3,6 +3,12 @@ import { PokemonCardProps } from '../../types/types';
 import './style.css';
 import getOnePokemon from '../../api/getOnePokemon';
 import { LoaderCard } from './loader';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addSelected,
+  removeFromSelected,
+} from '../../store/pokemons/selectedSlice';
+import { RootState } from '../../store/store';
 
 type PokemonStats = {
   slot: number;
@@ -21,7 +27,12 @@ type PokemonCardState = {
   isLoading: boolean;
 };
 
-export const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonsCard }) => {
+export const PokemonCard: React.FC<PokemonCardProps> = ({
+  pokemonsCard,
+  onCheckboxChange,
+}) => {
+  const { selectedData } = useSelector((state: RootState) => state.selected);
+  const dispatch = useDispatch();
   const [state, setState] = useState<PokemonCardState>({
     pictureUrl: '',
     pokemonHeight: '',
@@ -30,6 +41,24 @@ export const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonsCard }) => {
     pokemonId: '',
     isLoading: true,
   });
+  const [isChecked, setIsChecked] = useState<boolean | undefined>(false);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+    setIsChecked(!isChecked);
+    onCheckboxChange(event);
+    const currentPokemon = [
+      {
+        name: pokemonsCard.name,
+        url: pokemonsCard.url,
+      },
+    ];
+    if (isChecked) {
+      dispatch(removeFromSelected(currentPokemon));
+    } else {
+      dispatch(addSelected(currentPokemon));
+    }
+  };
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -47,8 +76,12 @@ export const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonsCard }) => {
         });
       }
     };
+    const selectCheck = selectedData.findIndex(
+      (item) => item.name === pokemonsCard.name
+    );
+    if (selectCheck >= 0) setIsChecked(true);
     fetchPokemon();
-  }, [pokemonsCard.url]);
+  }, [pokemonsCard.name, pokemonsCard.url, selectedData]);
 
   return (
     <div className="pokemon-card">
@@ -60,6 +93,12 @@ export const PokemonCard: React.FC<PokemonCardProps> = ({ pokemonsCard }) => {
           <div className="img-wrapper">
             <div className="pokemon-id">{state.pokemonId}</div>
             <img src={state.pictureUrl} className="pokemon-img" />
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={handleChange}
+              className="select-pokemon"
+            />
           </div>
           <p className="pokemon-stats">Height: {state.pokemonHeight}</p>
           <p className="pokemon-stats">Weight: {state.pokemonWeight}</p>

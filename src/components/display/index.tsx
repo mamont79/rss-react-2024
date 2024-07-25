@@ -20,18 +20,35 @@ export const DisplayCards = () => {
     return () => navigate(`/page/${page}/details/${id}`);
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+  };
+
+  const handleCardClick = (
+    event: React.MouseEvent<HTMLDivElement>,
+    url: string
+  ) => {
+    if (!(event.target as HTMLElement).closest('input[type="checkbox"]')) {
+      setCurrentId(url)();
+    }
+  };
+
   return (
     <div className="display">
       {isLoading ? (
         <LoaderCard />
       ) : (
         pokemonData.map((el: PokemonUrlData) => (
-          <div key={el.name} onClick={setCurrentId(el.url)}>
+          <div
+            key={el.name}
+            onClick={(event) => handleCardClick(event, el.url)}
+          >
             <PokemonCard
               pokemonsCard={{
                 name: el.name,
                 url: el.url,
               }}
+              onCheckboxChange={handleChange}
             />
           </div>
         ))

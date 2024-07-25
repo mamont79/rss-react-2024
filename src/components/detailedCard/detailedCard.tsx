@@ -14,7 +14,6 @@ export const DetailedCard = () => {
   const [state, setState] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log(details);
     const fetchData = async () => {
       if (details) {
         const data = await getOnePokemon(details);
