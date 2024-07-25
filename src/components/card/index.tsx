@@ -31,7 +31,9 @@ export const PokemonCard: React.FC<PokemonCardProps> = ({
   pokemonsCard,
   onCheckboxChange,
 }) => {
-  const { selectedData } = useSelector((state: RootState) => state.selected);
+  const { amount, selectedData } = useSelector(
+    (state: RootState) => state.selected
+  );
   const dispatch = useDispatch();
   const [state, setState] = useState<PokemonCardState>({
     pictureUrl: '',
@@ -82,6 +84,10 @@ export const PokemonCard: React.FC<PokemonCardProps> = ({
     if (selectCheck >= 0) setIsChecked(true);
     fetchPokemon();
   }, [pokemonsCard.name, pokemonsCard.url, selectedData]);
+
+  useEffect(() => {
+    if (amount === 0) setIsChecked(false);
+  }, [amount]);
 
   return (
     <div className="pokemon-card">
