@@ -10,6 +10,7 @@ import {
   getOnePokemonAsync,
   getPokemonsAsync,
 } from '../../store/pokemons/pokemonSlice';
+import { FlyOut } from './flyOut';
 
 interface HeaderProps {
   changeInput(input: string): void;
@@ -19,9 +20,7 @@ export const Header = ({ changeInput }: HeaderProps) => {
   const [inputValue, setInputValue] = useLocalStorage(LS_ITEM);
   const [valueInInput, setValueInInput] = useState('');
   const [, setSearchParams] = useSearchParams();
-  const { amount, selectedData } = useSelector(
-    (state: RootState) => state.selected
-  );
+  const { amount } = useSelector((state: RootState) => state.selected);
   const dispatch = useDispatch<AppDispatch>();
   const params = useParams<Record<string, string>>();
   const { page } = params;
@@ -35,11 +34,6 @@ export const Header = ({ changeInput }: HeaderProps) => {
       if (!inputValue) setSearchParams({});
     }
   }, [inputValue, setSearchParams]);
-
-  useEffect(() => {
-    console.log(amount);
-    console.log(selectedData);
-  }, [amount, selectedData]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -66,7 +60,6 @@ export const Header = ({ changeInput }: HeaderProps) => {
 
   return (
     <header className="header">
-      <div>{amount}</div>
       <div className="search-wrapper">
         <ThemeButton />
         <input
@@ -79,6 +72,7 @@ export const Header = ({ changeInput }: HeaderProps) => {
         <button onClick={onSearch} className="search-button">
           Search
         </button>
+        <div className="flyout-wrapper">{amount > 0 ? <FlyOut /> : ''}</div>)
       </div>
     </header>
   );
