@@ -51,8 +51,12 @@ export const PokemonCard: React.FC<PokemonCardProps> = ({
     onCheckboxChange(event);
     const currentPokemon = [
       {
+        id: state.pokemonId,
         name: pokemonsCard.name,
         url: pokemonsCard.url,
+        height: state.pokemonHeight,
+        weight: state.pokemonWeight,
+        type: state.pokemonType,
       },
     ];
     if (isChecked) {
@@ -72,7 +76,7 @@ export const PokemonCard: React.FC<PokemonCardProps> = ({
           pictureUrl: data.sprites.front_default,
           pokemonHeight: data.height,
           pokemonWeight: data.weight,
-          pokemonType: types.join(', '),
+          pokemonType: types.join('+'),
           pokemonId: `${id}`,
           isLoading: false,
         });

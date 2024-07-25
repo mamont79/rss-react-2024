@@ -3,6 +3,15 @@ export type PokemonUrlData = {
   url: string;
 };
 
+export type SelectedPokemonType = {
+  id: string;
+  name: string;
+  url: string;
+  height: string;
+  weight: string;
+  type: string;
+};
+
 export type PokemonTypes = {
   type: { name: string };
 };

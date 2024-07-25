@@ -72,7 +72,7 @@ export const Header = ({ changeInput }: HeaderProps) => {
         <button onClick={onSearch} className="search-button">
           Search
         </button>
-        <div className="flyout-wrapper">{amount > 0 ? <FlyOut /> : ''}</div>
+        <div className="flyout-wrapper">{amount > 0 && <FlyOut />}</div>
       </div>
     </header>
   );

@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { PokemonUrlData } from '../../types/types';
+import { SelectedPokemonType } from '../../types/types';
 
 type SelectedState = {
   amount: number;
-  selectedData: PokemonUrlData[];
+  selectedData: SelectedPokemonType[];
 };
 
 const initialState: SelectedState = {
