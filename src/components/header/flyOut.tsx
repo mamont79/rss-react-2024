@@ -4,16 +4,12 @@ import './style.css';
 import { resetAll } from '../../store/pokemons/selectedSlice';
 
 export const FlyOut = () => {
-  const { amount, selectedData } = useSelector(
-    (state: RootState) => state.selected
-  );
+  const { amount } = useSelector((state: RootState) => state.selected);
   const dispatch = useDispatch();
 
   const unselectAll = () => {
     dispatch(resetAll());
   };
-
-  console.log(selectedData);
 
   return (
     <div className="flyout">
