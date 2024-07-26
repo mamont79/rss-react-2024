@@ -1,4 +1,10 @@
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  act,
+} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { DetailedCard } from '../../../components/detailedCard/detailedCard';
@@ -27,8 +33,10 @@ const mockPokemon = {
 };
 
 describe('DetailedCard component', () => {
-  beforeEach(() => {
-    mockGetOnePokemon.mockResolvedValue(mockPokemon);
+  beforeEach(async () => {
+    await act(async () => {
+      mockGetOnePokemon.mockResolvedValue(mockPokemon);
+    });
   });
 
   afterEach(() => {
@@ -92,6 +100,7 @@ describe('DetailedCard component', () => {
     );
 
     fireEvent.click(screen.getByText('Close X'));
+
     expect(screen.getByText('Page 1')).toBeInTheDocument();
   });
 });

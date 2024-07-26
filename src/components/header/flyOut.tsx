@@ -14,28 +14,20 @@ export const FlyOut = () => {
     dispatch(resetAll());
   };
 
-  const handleDownload = () => {
-    const csvContent = convertToCSV(selectedData);
-    const fileName = `${amount}_pokemons.csv`;
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-
-    link.href = url;
-    link.setAttribute('download', fileName);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <div className="flyout">
       <div className="flyout-count">Selected: {amount}</div>
       <button className="flyout-button" onClick={unselectAll}>
         Unselect All
       </button>
-      <button className="flyout-button" onClick={handleDownload}>
-        Download
+      <button className="flyout-button">
+        <a
+          className="flyout-link"
+          href={convertToCSV(selectedData)}
+          download={`${amount}_pokemons.csv`}
+        >
+          Download
+        </a>
       </button>
     </div>
   );

@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 export type ThemeType = 'classic' | 'golden';
 
-enum Color {
+export enum Color {
   RED = '#ff0000',
   GOLD = '#f8c213',
   WHITE = '#ffffff',

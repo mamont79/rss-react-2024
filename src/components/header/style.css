@@ -84,8 +84,23 @@
 .flyout-button {
   width: 130px;
   margin-inline: auto;
+  padding: 0;
+  height: 30px;
   background-color: var(--background);
   border-radius: 25px;
   color: var(--color);
   transition: all 0.5s;
+}
+
+.flyout-link {
+  margin: 0;
+  display: block;
+  width: 130px;
+  height: 25px;
+  text-decoration: none;
+  color: var(--color);
+}
+
+.flyout-link:hover {
+  color: var(--color);
 }
