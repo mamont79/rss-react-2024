@@ -27,7 +27,6 @@ const selectedSlice = createSlice({
       state.selectedData = state.selectedData.filter(
         (item) => item.name !== action.payload[0].name
       );
-
       state.amount -= 1;
     },
   },
