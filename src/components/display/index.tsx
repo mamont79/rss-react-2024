@@ -5,15 +5,26 @@ import './style.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { LoaderCard } from '../card/loader';
+import { useGetPokemonsQuery } from '../../api/pokemonsApi';
+import { useLocalStorage } from '../../customHooks/useLocalStorage';
+import { LS_ITEM } from '../../constants/constants';
 
 export const DisplayCards = () => {
-  const { pokemonData, isLoading } = useSelector(
-    (state: RootState) => state.pokemons
-  );
+  const [inputValue] = useLocalStorage(LS_ITEM);
 
   const params = useParams<Record<string, string>>();
   const { page } = params;
   const navigate = useNavigate();
+  const { pokemonData, isLoading } = useSelector(
+    (state: RootState) => state.pokemons
+  );
+  const { data } = useGetPokemonsQuery(page || '1');
+  console.log(data);
+
+  let infoData: PokemonUrlData[];
+
+  if (inputValue || !data) infoData = pokemonData;
+  if (!inputValue && data) infoData = data.results;
 
   const setCurrentId = (url: string) => {
     const id = Number(url.split('/').reverse()[1]);
@@ -38,7 +49,7 @@ export const DisplayCards = () => {
       {isLoading ? (
         <LoaderCard />
       ) : (
-        pokemonData.map((el: PokemonUrlData) => (
+        infoData!.map((el: PokemonUrlData) => (
           <div
             key={el.name}
             onClick={(event) => handleCardClick(event, el.url)}
