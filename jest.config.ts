@@ -26,10 +26,8 @@ module.exports = {
     'jest.setup.ts',
     'src/main.tsx',
     'src/App.tsx',
-    'index.tsx',
+    'src/errorBoundary',
     'src/test',
-    'src/customHooks',
-    'src/components/header/buttonMistake.tsx',
   ],
 
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],

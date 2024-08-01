@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SelectedPokemonType } from '../../types/types';
 
-type SelectedState = {
+export type SelectedState = {
   amount: number;
   selectedData: SelectedPokemonType[];
 };
