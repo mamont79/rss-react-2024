@@ -13,7 +13,7 @@ it('should return a successful response', async () => {
 
   const pokemonData = await getPokemons();
 
-  expect(mockResponse.data.results).toEqual(pokemonData);
+  expect(mockResponse.data).toEqual(pokemonData);
 });
 
 it('should throw an error when the request fails', async () => {

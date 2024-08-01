@@ -4,7 +4,8 @@
   padding: 16px;
   border: solid 4px goldenrod;
   border-radius: 15px;
-  background: rgb(252, 229, 82);
+  background: linear-gradient(120deg, var(--gradstart), var(--gradend));
+  color: var(--wrapper);
 }
 
 .pokemon-name {
@@ -25,6 +26,7 @@
   position: absolute;
   right: 10px;
   top: 10px;
+  color: black;
   font-weight: bold;
 }
 
@@ -64,4 +66,38 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.select-pokemon {
+  position: absolute;
+  top: -65px;
+  right: -40px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  appearance: none;
+  background-color: #fff;
+  border: 3px solid goldenrod;
+  border-radius: 12px;
+  outline: none;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+}
+
+.select-pokemon:checked {
+  background-color: #43c4f3;
+  border-color: #fff;
+}
+
+.select-pokemon:checked:before {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 6px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 4px 4px 0;
+  transform: rotate(45deg);
 }

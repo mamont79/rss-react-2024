@@ -1,7 +1,9 @@
-export const lsItem = 'searchPokemon';
+export const LS_ITEM = 'searchPokemon';
 
-export const currentPage = 'currentPage';
+export const CURRENT_PAGE = 'currentPage';
 
-export const apiLink = 'https://pokeapi.co/api/v2/pokemon/';
+export const API_LINK = 'https://pokeapi.co/api/v2/pokemon/';
 
-export const maxPage = 66;
+export const MAX_PAGE = 66;
+
+export const THEME = 'theme';

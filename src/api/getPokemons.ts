@@ -8,11 +8,11 @@ const getPokemons = async (page = 1) => {
     const { data } = await instance.get(`/`, {
       params: { offset: offset, limit: pokemonsPerPage },
     });
-    console.log(data);
-    return data.results;
+    return data;
   } catch {
     throw new Error(`Can't get data`);
   }
 };
+
 
 export default getPokemons;
