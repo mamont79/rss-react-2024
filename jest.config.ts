@@ -24,10 +24,12 @@ module.exports = {
     'package-lock.json',
     'reportWebVitals.ts',
     'jest.setup.ts',
+    'index.tsx',
     'src/main.tsx',
     'src/App.tsx',
     'src/errorBoundary',
     'src/test',
+    'src/store',
   ],
 
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
