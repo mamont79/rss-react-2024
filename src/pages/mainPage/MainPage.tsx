@@ -1,12 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Header } from '../../components/header/header';
 
 export const MainPage = () => {
   return (
     <>
-      <header>
-        <Link to={'/react-form'}>React form</Link>
-        <Link to={'/uncontrolled'}>Uncontrolled form</Link>
-      </header>
+      <Header />
+
       <div>Main</div>
       <div>Page</div>
     </>
