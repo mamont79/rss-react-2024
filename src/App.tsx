@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './App.css';
 import { MainPage } from './pages/mainPage/MainPage';
 import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage';
 import { ReactHookForm } from './pages/reactHookForm/ReactHookForm';
 import { UncontrolledForm } from './pages/uncontrolledForm/UncontrolledForm';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import './App.css';
 
 const router = createBrowserRouter([
   { path: '/', element: <MainPage /> },

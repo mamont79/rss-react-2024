@@ -1,0 +1,25 @@
+h1 {
+  margin-bottom: 0;
+}
+
+.user-data {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  min-width: 300px;
+  margin: 100px auto;
+}
+
+.string-wrapper {
+  display: flex;
+  flex-direction: row;
+  font-weight: 700;
+  height: 25px;
+  border: 1px solid black;
+}
+
+.user-left,
+.user-right {
+  display: block;
+  width: 50%;
+}

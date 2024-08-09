@@ -2,9 +2,9 @@ import { Link, useLocation } from 'react-router-dom';
 import './style.css';
 
 const linksData = [
-  { linkTo: '/', text: 'Main Page' },
-  { linkTo: '/react-form', text: 'React form' },
-  { linkTo: '/uncontrolled', text: 'Uncontrolled form' },
+  { linkTo: '/', text: 'Main Page', key: 'main' },
+  { linkTo: '/react-form', text: 'React form', key: 'react' },
+  { linkTo: '/uncontrolled', text: 'Uncontrolled form', key: 'uncontrolled' },
 ];
 
 export const Header = () => {
@@ -14,11 +14,9 @@ export const Header = () => {
 
   return (
     <header className="header">
-      {data.map(({ linkTo, text }) => (
-        <Link to={linkTo} className="link">
-          <div key={linkTo} className="header-link">
-            {text}
-          </div>
+      {data.map(({ linkTo, text, key }) => (
+        <Link key={key} to={linkTo} className="link">
+          <div className="header-link">{text}</div>
         </Link>
       ))}
     </header>
