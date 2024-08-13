@@ -1,36 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export type UserType = {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  gender: 'male' | 'female' | 'not selected';
-  acceptTC: 'accepted' | 'not accepted';
-};
+import { UserData, UserType } from '../../types/types';
 
 const initialState: UserType = {
-  name: '',
-  age: 0,
-  email: '',
-  password: '',
-  gender: 'not selected',
-  acceptTC: 'not accepted',
+  data: [
+    {
+      name: '',
+      age: 0,
+      email: '',
+      password: '',
+      gender: 'not selected',
+      acceptTC: 'not accepted',
+      confirmPassword: '',
+    },
+  ],
+  date: 0,
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserData(state, action: PayloadAction<UserType>) {
-      state.name = action.payload.name;
-      state.age = action.payload.age;
-      state.password = action.payload.password;
-      state.email = action.payload.email;
-      state.gender = action.payload.gender;
-      state.acceptTC = action.payload.acceptTC;
+    setUserData(state, action: PayloadAction<UserData>) {
+      state.data = [action.payload, ...state.data];
+      state.date = new Date().getTime();
     },
   },
 });
 
+export const { setUserData } = userSlice.actions;
 export default userSlice.reducer;

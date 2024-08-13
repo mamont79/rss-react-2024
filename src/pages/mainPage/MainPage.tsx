@@ -2,48 +2,48 @@ import { useSelector } from 'react-redux';
 import { Header } from '../../components/header/header';
 import './style.css';
 import { RootState } from '../../store/store';
+import { DataLink } from './DataLink';
 
 export const MainPage = () => {
-  const { name, age, email, password, gender, acceptTC } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { data } = useSelector((state: RootState) => state.user);
+  console.log(data);
 
   return (
     <>
       <Header />
-      <h1>USERS DATA:</h1>
-      {name ? (
+      <h1 className="title">USERS DATA:</h1>
+      {data[0].name ? (
         <div className="user-data">
-          <p className="string-wrapper">
-            <span className="user-left">Name:</span>
-            {' : '}
-            <span className="user-right">{name}</span>
-          </p>
-          <p className="string-wrapper">
-            <span className="user-left">Age:</span>
-            {' : '}
-            <span className="user-right">{age}</span>
-          </p>
-          <p className="string-wrapper">
-            <span className="user-left">Email:</span>
-            {' : '}
-            <span className="user-right">{email}</span>
-          </p>
-          <p className="string-wrapper">
-            <span className="user-left">Password:</span>
-            {' : '}
-            <span className="user-right">{password}</span>
-          </p>
-          <p className="string-wrapper">
-            <span className="user-left">Gender:</span>
-            {' : '}
-            <span className="user-right">{gender}</span>
-          </p>
-          <p className="string-wrapper">
-            <span className="user-left">Accept Terms and Conditions:</span>
-            {' : '}
-            <span className="user-right">{acceptTC}</span>
-          </p>
+          <DataLink
+            title="Name:"
+            dataValue={data[0].name}
+            prevDataValue={data[1].name}
+          />
+          <DataLink
+            title="Age:"
+            dataValue={data[0].age}
+            prevDataValue={data[1].age}
+          />
+          <DataLink
+            title="Email:"
+            dataValue={data[0].email}
+            prevDataValue={data[1].email}
+          />
+          <DataLink
+            title="Password:"
+            dataValue={data[0].password}
+            prevDataValue={data[1].password}
+          />
+          <DataLink
+            title="Gender:"
+            dataValue={data[0].gender}
+            prevDataValue={data[1].gender}
+          />
+          <DataLink
+            title="Accept Terms and Conditions:"
+            dataValue={data[0].acceptTC}
+            prevDataValue={data[1].acceptTC}
+          />
         </div>
       ) : (
         <div>There is nothing to see... Please fill one of two forms</div>

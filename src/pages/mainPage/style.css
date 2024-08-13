@@ -1,7 +1,3 @@
-h1 {
-  margin-bottom: 0;
-}
-
 .user-data {
   display: flex;
   flex-direction: column;
@@ -22,4 +18,11 @@ h1 {
 .user-right {
   display: block;
   width: 50%;
+}
+
+.user-right-new {
+  display: block;
+  width: 50%;
+  background: yellow;
+  font-size: 18px;
 }
