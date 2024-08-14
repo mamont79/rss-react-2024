@@ -16,6 +16,11 @@ export const DataLink = ({
   const [newer, setNewer] = useState(false);
   const { date } = useSelector((state: RootState) => state.user);
 
+  let value = dataValue;
+  if (typeof dataValue === 'boolean') {
+    value = dataValue === true ? 'accepted' : 'not accepted';
+  }
+
   useEffect(() => {
     const time = new Date().getTime() - date;
     if (time < 5000) {
@@ -32,9 +37,7 @@ export const DataLink = ({
     <p className="string-wrapper">
       <span className="user-left">{title}</span>
       {' : '}
-      <span className={newer ? 'user-right-new' : 'user-right'}>
-        {dataValue}
-      </span>
+      <span className={newer ? 'user-right-new' : 'user-right'}>{value}</span>
     </p>
   );
 };

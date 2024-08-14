@@ -10,5 +10,6 @@ export type UserData = {
   password: string;
   confirmPassword: string;
   gender: string;
-  acceptTC: 'accepted' | 'not accepted';
+  country: string;
+  acceptTC: boolean;
 };

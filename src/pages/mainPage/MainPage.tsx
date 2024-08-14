@@ -40,6 +40,11 @@ export const MainPage = () => {
             prevDataValue={data[1].gender}
           />
           <DataLink
+            title="Country:"
+            dataValue={data[0].country}
+            prevDataValue={data[1].country}
+          />
+          <DataLink
             title="Accept Terms and Conditions:"
             dataValue={data[0].acceptTC}
             prevDataValue={data[1].acceptTC}

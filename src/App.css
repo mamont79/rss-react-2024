@@ -46,7 +46,7 @@ label {
   color: #b043ba;
 }
 
-input:focus-within {
+.input:focus-within {
   background: #fbdcfd;
 }
 
@@ -69,6 +69,7 @@ input:focus-within {
   font-weight: 600;
   transition: all 0.4s;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .submit-button:hover {
@@ -96,4 +97,41 @@ input:focus-within {
   outline: none;
   font-size: 18px;
   color: #b043ba;
+}
+
+.label-accept {
+  display: flex;
+  justify-content: left;
+  gap: 20px;
+  font-size: 16px;
+  color: #b043ba;
+  font-weight: 500;
+}
+
+.country-list {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  right: 0;
+  top: 28px;
+  z-index: 1;
+  background: #fbdcfd;
+  width: 300px;
+  list-style-type: none;
+  border: 1px solid #b043ba;
+  max-height: 150px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+  scrollbar-track-color: #611967;
+}
+
+.country-item {
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.country-item:hover {
+  background-color: #f0f0f0;
 }

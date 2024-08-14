@@ -10,15 +10,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../../store/slices/userSlice';
 import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
+import { filterCountries } from '../../store/slices/countrySlice';
 
 export const UncontrolledForm = () => {
   const { data } = useSelector((state: RootState) => state.user);
+  const { output } = useSelector((state: RootState) => state.country);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfPassword, setShowConfPassword] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [showCountryOptions, setShowCountryOptions] = useState(false);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
@@ -26,6 +29,8 @@ export const UncontrolledForm = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
   const genderRef = useRef<HTMLSelectElement>(null);
+  const acceptTCRef = useRef<HTMLInputElement>(null);
+  const countryRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (data.length > 1) {
@@ -38,8 +43,23 @@ export const UncontrolledForm = () => {
       if (confirmPasswordRef.current)
         confirmPasswordRef.current.value = userData.confirmPassword;
       if (genderRef.current) genderRef.current.value = userData.gender;
+      if (acceptTCRef.current)
+        acceptTCRef.current.checked = userData.acceptTC || false;
     }
   }, [data]);
+
+  const getCountries = () => {
+    const inputValue = countryRef.current?.value || '';
+    dispatch(filterCountries(inputValue));
+    setShowCountryOptions(inputValue.length > 0);
+  };
+
+  const handleCountrySelect = (country: string) => {
+    if (countryRef.current) {
+      countryRef.current.value = country;
+    }
+    setShowCountryOptions(false);
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     setErrors({});
@@ -51,7 +71,8 @@ export const UncontrolledForm = () => {
       password: passwordRef.current!.value,
       confirmPassword: confirmPasswordRef.current!.value,
       gender: genderRef.current!.value,
-      acceptTC: 'not accepted',
+      acceptTC: acceptTCRef.current!.checked,
+      country: countryRef.current!.value,
     };
     console.log(formData);
 
@@ -125,6 +146,7 @@ export const UncontrolledForm = () => {
           {errors.confirmPassword && (
             <p className="error">{errors.confirmPassword}</p>
           )}
+
           <label>
             Gender:
             <select name="gender" ref={genderRef} className="select">
@@ -132,10 +154,42 @@ export const UncontrolledForm = () => {
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
-              <option value="not selected">Don't want to select</option>
+              <option value="not selected">Want not to select</option>
             </select>
           </label>
           {errors.gender && <p className="error">{errors.gender}</p>}
+
+          <label>
+            Country:
+            <input
+              onChange={getCountries}
+              className="input"
+              type="text"
+              name="country"
+              ref={countryRef}
+            />
+            {showCountryOptions && (
+              <ul className="country-list">
+                {output.map((country, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleCountrySelect(country)}
+                    className="country-item"
+                  >
+                    {country}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </label>
+          {errors.country && <p className="error">{errors.country}</p>}
+
+          <label className="label-accept">
+            <input type="checkbox" ref={acceptTCRef} name="acceptTC" /> I
+            solemnly swear to read the Terms and Conditions (or at least pretend
+            to)
+          </label>
+          {errors.acceptTC && <p className="error">{errors.acceptTC}</p>}
 
           <button type="submit" className="submit-button">
             Submit
