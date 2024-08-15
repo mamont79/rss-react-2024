@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserData, UserType } from '../../types/types';
+import { FileType, UserData, UserType } from '../../types/types';
 
 const initialState: UserType = {
   data: [
@@ -12,9 +12,18 @@ const initialState: UserType = {
       acceptTC: false,
       country: '',
       confirmPassword: '',
+      userPicture: '',
+      pictureName: '',
     },
   ],
   date: 0,
+  files: [
+    {
+      name: '',
+      base64: '',
+      size: 0,
+    },
+  ],
 };
 
 const userSlice = createSlice({
@@ -25,8 +34,11 @@ const userSlice = createSlice({
       state.data = [action.payload, ...state.data];
       state.date = new Date().getTime();
     },
+    setUserFile(state, action: PayloadAction<FileType>) {
+      state.files = [action.payload, ...state.files];
+    },
   },
 });
 
-export const { setUserData } = userSlice.actions;
+export const { setUserData, setUserFile } = userSlice.actions;
 export default userSlice.reducer;

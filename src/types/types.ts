@@ -1,6 +1,13 @@
 export type UserType = {
   date: number;
   data: UserData[];
+  files: FileType[];
+};
+
+export type FileType = {
+  name: string;
+  base64: string;
+  size: number;
 };
 
 export type UserData = {
@@ -12,4 +19,6 @@ export type UserData = {
   gender: string;
   country: string;
   acceptTC: boolean;
+  userPicture: string;
+  pictureName: string;
 };

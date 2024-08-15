@@ -7,13 +7,13 @@ import { UserData } from '../../types/types';
 import { schema } from '../../schemas/schema';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setUserData } from '../../store/slices/userSlice';
+import { setUserData, setUserFile } from '../../store/slices/userSlice';
 import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { filterCountries } from '../../store/slices/countrySlice';
 
 export const UncontrolledForm = () => {
-  const { data } = useSelector((state: RootState) => state.user);
+  const { data, files } = useSelector((state: RootState) => state.user);
   const { output } = useSelector((state: RootState) => state.country);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ export const UncontrolledForm = () => {
   const genderRef = useRef<HTMLSelectElement>(null);
   const acceptTCRef = useRef<HTMLInputElement>(null);
   const countryRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (data.length > 1) {
@@ -43,10 +44,14 @@ export const UncontrolledForm = () => {
       if (confirmPasswordRef.current)
         confirmPasswordRef.current.value = userData.confirmPassword;
       if (genderRef.current) genderRef.current.value = userData.gender;
+      if (countryRef.current) countryRef.current.value = userData.country;
+      if (fileInputRef.current && files) {
+        fileInputRef.current.files = new DataTransfer().files;
+      }
       if (acceptTCRef.current)
         acceptTCRef.current.checked = userData.acceptTC || false;
     }
-  }, [data]);
+  }, [data, files]);
 
   const getCountries = () => {
     const inputValue = countryRef.current?.value || '';
@@ -61,6 +66,21 @@ export const UncontrolledForm = () => {
     setShowCountryOptions(false);
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      convertFileToBase64(file).then((base64String) => {
+        dispatch(
+          setUserFile({
+            name: file.name,
+            size: file.size,
+            base64: base64String as string,
+          })
+        );
+      });
+    }
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     setErrors({});
     e.preventDefault();
@@ -73,8 +93,15 @@ export const UncontrolledForm = () => {
       gender: genderRef.current!.value,
       acceptTC: acceptTCRef.current!.checked,
       country: countryRef.current!.value,
+      userPicture: files[0].base64 || '',
+      pictureName: files[0].name || '',
     };
     console.log(formData);
+
+    if (fileInputRef.current?.files?.length) {
+      const file = fileInputRef.current.files[0];
+      formData.userPicture = (await convertFileToBase64(file)) as string;
+    }
 
     try {
       await schema.validate(formData, { abortEarly: false });
@@ -91,6 +118,16 @@ export const UncontrolledForm = () => {
       }
     }
   };
+
+  const convertFileToBase64 = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   return (
     <>
       <Header />
@@ -183,6 +220,21 @@ export const UncontrolledForm = () => {
             )}
           </label>
           {errors.country && <p className="error">{errors.country}</p>}
+
+          <label>
+            User Picture:
+            <input
+              className="input-file"
+              type="file"
+              ref={fileInputRef}
+              accept="image/jpeg, image/png"
+              onInput={handleImageUpload}
+            />
+            {files.length > 1 && (
+              <div className="file-name">Selected file: {files[0].name}</div>
+            )}
+          </label>
+          {errors.userPicture && <p className="error">{errors.userPicture}</p>}
 
           <label className="label-accept">
             <input type="checkbox" ref={acceptTCRef} name="acceptTC" /> I

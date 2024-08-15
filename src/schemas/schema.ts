@@ -11,6 +11,7 @@ export const schema = Yup.object().shape({
       return value !== undefined && value > 0;
     })
     .min(0, 'age must be a positive number')
+    .max(200, 'it is impossible, please write real age')
     .required('age is required'),
   email: Yup.string().email('invalid email').required('email is required'),
   password: Yup.string()
@@ -44,4 +45,23 @@ export const schema = Yup.object().shape({
     .oneOf([true], 'you must accept the terms and conditions')
     .required('you must accept the terms and conditions'),
   country: Yup.string().required('country is required'),
+  userPicture: Yup.mixed()
+    .required('Profile picture is required')
+    .test('fileSize', 'File size must be less than 2MB', (value) => {
+      if (!value) return false;
+      const base64Str = value as string;
+      const fileSizeInBytes =
+        base64Str.length * (3 / 4) -
+        (base64Str.indexOf('=') > 0
+          ? base64Str.length - base64Str.indexOf('=')
+          : 0);
+      return fileSizeInBytes <= 2 * 1024 * 1024;
+    })
+    .test(
+      'fileType',
+      'Only .jpeg and .png formats are allowed',
+      (value) =>
+        (value as string).includes('image/jpeg') ||
+        (value as string).includes('image/png')
+    ),
 });

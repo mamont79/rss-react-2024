@@ -135,3 +135,23 @@ label {
 .country-item:hover {
   background-color: #f0f0f0;
 }
+
+.input-file {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 90px;
+  height: 30px;
+  display: block;
+  margin-top: 5px;
+}
+
+.file-name {
+  position: absolute;
+  right: 100px;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 30px;
+  margin-left: 0;
+}
