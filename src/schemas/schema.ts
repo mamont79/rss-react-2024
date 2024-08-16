@@ -21,6 +21,13 @@ export const schema = Yup.object().shape({
       /[0-9]/.test(value || '')
     )
     .test(
+      'has-special-char',
+      'Password must contain at least one special character',
+      (value) => {
+        return /[@$!%*?&_-]/.test(value || '');
+      }
+    )
+    .test(
       'has-lowercase',
       'password must contain at least one lowercase letter',
       (value) => /[a-z]/.test(value || '')
@@ -29,11 +36,6 @@ export const schema = Yup.object().shape({
       'has-uppercase',
       'password must contain at least one uppercase letter',
       (value) => /[A-Z]/.test(value || '')
-    )
-    .test(
-      'has-special-char',
-      'password must contain at least one special character',
-      (value) => /[@$!%*?&-_]/.test(value || '')
     ),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'passwords must match')

@@ -11,8 +11,7 @@ type UserInfoType = {
 };
 
 export const MainPage = () => {
-  const { data, files } = useSelector((state: RootState) => state.user);
-  console.log(files);
+  const { data } = useSelector((state: RootState) => state.user);
 
   const check = data.length > 1;
   const userInfo = !check

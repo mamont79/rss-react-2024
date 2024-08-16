@@ -11,6 +11,7 @@ import { setUserData, setUserFile } from '../../store/slices/userSlice';
 import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { filterCountries } from '../../store/slices/countrySlice';
+import { PasswordStrength } from '../../components/passwordStrength/PasswordStrength';
 
 export const UncontrolledForm = () => {
   const { data, files } = useSelector((state: RootState) => state.user);
@@ -21,6 +22,9 @@ export const UncontrolledForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfPassword, setShowConfPassword] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [passwordToCheck, setPasswordToCheck] = useState(
+    data[0].password || ''
+  );
   const [showCountryOptions, setShowCountryOptions] = useState(false);
 
   const nameRef = useRef<HTMLInputElement>(null);
@@ -128,6 +132,10 @@ export const UncontrolledForm = () => {
     });
   };
 
+  const handlePasswordCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordToCheck(e.target.value);
+  };
+
   return (
     <>
       <Header />
@@ -156,6 +164,7 @@ export const UncontrolledForm = () => {
               type={showPassword ? 'text' : 'password'}
               name="password"
               ref={passwordRef}
+              onChange={handlePasswordCheck}
             />
             <span
               className="visibility"
@@ -163,6 +172,7 @@ export const UncontrolledForm = () => {
             >
               {showPassword ? <OpenEye /> : <ClosedEye />}
             </span>
+            {passwordToCheck && <PasswordStrength password={passwordToCheck} />}
           </label>
           {errors.password && <p className="error">{errors.password}</p>}
           <label>
