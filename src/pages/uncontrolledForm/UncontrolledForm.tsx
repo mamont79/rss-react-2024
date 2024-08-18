@@ -3,7 +3,7 @@ import { Header } from '../../components/header/header';
 import { ClosedEye } from '../../assets/closedEye';
 import { OpenEye } from '../../assets/openEye';
 import * as Yup from 'yup';
-import { UserData } from '../../types/types';
+import { UserData, Gender } from '../../types/types';
 import { schema } from '../../schemas/schema';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -94,7 +94,7 @@ export const UncontrolledForm = () => {
       email: emailRef.current!.value,
       password: passwordRef.current!.value,
       confirmPassword: confirmPasswordRef.current!.value,
-      gender: genderRef.current!.value || undefined,
+      gender: genderRef.current!.value as Gender,
       acceptTC: acceptTCRef.current!.checked,
       country: countryRef.current!.value,
       userPicture: files[0].base64 || '',

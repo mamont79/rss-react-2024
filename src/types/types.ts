@@ -16,9 +16,11 @@ export type UserData = {
   email: string;
   password: string;
   confirmPassword: string;
-  gender: 'male' | 'female' | 'other' | 'not selected' | '';
+  gender: Gender;
   country: string;
   acceptTC: boolean;
   userPicture: string;
   pictureName?: string;
 };
+
+export type Gender = 'male' | 'female' | 'other' | 'not selected' | ''

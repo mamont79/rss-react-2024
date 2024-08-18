@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Header } from '../../components/header/header';
-import { UserData } from '../../types/types';
+import { UserData, Gender } from '../../types/types';
 import { useDispatch } from 'react-redux';
 import { filterCountries } from '../../store/slices/countrySlice';
 import { useState } from 'react';
@@ -34,7 +34,7 @@ export const ReactHookForm = () => {
       email: data[0]?.email || '',
       password: data[0]?.password || '',
       confirmPassword: data[0]?.confirmPassword || '',
-      gender: data[0]?.gender || '',
+      gender: (data[0]?.gender as Gender) || '',
       acceptTC: data[0]?.acceptTC || false,
       country: data[0]?.country || '',
       userPicture: '',
