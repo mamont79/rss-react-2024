@@ -23,4 +23,4 @@ export type UserData = {
   pictureName?: string;
 };
 
-export type Gender = 'male' | 'female' | 'other' | 'not selected' | ''
+export type Gender = 'male' | 'female' | 'other' | 'not selected' | '';

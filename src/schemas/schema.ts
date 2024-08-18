@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
-export const schema = Yup.object().shape({
+import { UserData } from '../types/types';
+
+export const schema: Yup.ObjectSchema<UserData> = Yup.object().shape({
   name: Yup.string()
     .matches(
       /^[А-ЯA-Z][а-яa-zА-ЯA-Z]*$/,
@@ -47,7 +49,7 @@ export const schema = Yup.object().shape({
     .oneOf([true], 'you must accept the terms and conditions')
     .required('you must accept the terms and conditions'),
   country: Yup.string().required('country is required'),
-  userPicture: Yup.mixed()
+  userPicture: Yup.string()
     .required('Profile picture is required')
     .test('fileSize', 'File size must be less than 1MB', (value) => {
       if (!value) return false;
@@ -66,4 +68,5 @@ export const schema = Yup.object().shape({
         (value as string).includes('image/jpeg') ||
         (value as string).includes('image/png')
     ),
+  pictureName: Yup.string().optional(),
 });
