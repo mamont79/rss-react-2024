@@ -94,7 +94,7 @@ export const UncontrolledForm = () => {
       email: emailRef.current!.value,
       password: passwordRef.current!.value,
       confirmPassword: confirmPasswordRef.current!.value,
-      gender: genderRef.current!.value,
+      gender: genderRef.current!.value || undefined,
       acceptTC: acceptTCRef.current!.checked,
       country: countryRef.current!.value,
       userPicture: files[0].base64 || '',

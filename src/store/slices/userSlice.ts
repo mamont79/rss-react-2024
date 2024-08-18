@@ -8,7 +8,7 @@ const initialState: UserType = {
       age: 0,
       email: '',
       password: '',
-      gender: 'not selected',
+      gender: '',
       acceptTC: false,
       country: '',
       confirmPassword: '',

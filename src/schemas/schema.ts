@@ -49,7 +49,7 @@ export const schema = Yup.object().shape({
   country: Yup.string().required('country is required'),
   userPicture: Yup.mixed()
     .required('Profile picture is required')
-    .test('fileSize', 'File size must be less than 2MB', (value) => {
+    .test('fileSize', 'File size must be less than 1MB', (value) => {
       if (!value) return false;
       const base64Str = value as string;
       const fileSizeInBytes =
@@ -57,7 +57,7 @@ export const schema = Yup.object().shape({
         (base64Str.indexOf('=') > 0
           ? base64Str.length - base64Str.indexOf('=')
           : 0);
-      return fileSizeInBytes <= 2 * 1024 * 1024;
+      return fileSizeInBytes <= 1 * 1024 * 1024;
     })
     .test(
       'fileType',

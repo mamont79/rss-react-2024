@@ -12,13 +12,13 @@ export type FileType = {
 
 export type UserData = {
   name: string;
-  age: number | null;
+  age: number;
   email: string;
   password: string;
   confirmPassword: string;
-  gender: string;
+  gender: 'male' | 'female' | 'other' | 'not selected' | '';
   country: string;
   acceptTC: boolean;
   userPicture: string;
-  pictureName: string;
+  pictureName?: string;
 };
