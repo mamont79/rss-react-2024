@@ -1,0 +1,59 @@
+.user-data {
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  min-width: 300px;
+  margin: 5px auto;
+}
+
+.string-wrapper {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  font-weight: 700;
+  height: 50px;
+  border: 1px solid #7e1c71;
+  border-radius: 10px;
+  color: #7e1c71;
+  line-height: 50px;
+}
+
+.user-left,
+.user-right,
+.user-prev {
+  display: block;
+  width: 33%;
+  line-height: 50px;
+  overflow: hidden;
+}
+
+.user-right-new {
+  display: block;
+  width: 33%;
+  line-height: 50px;
+  background: yellow;
+  font-size: 18px;
+  overflow: hidden;
+}
+
+.button-page {
+  width: 180px;
+  height: 32px;
+  line-height: 30px;
+  font-size: 16px;
+  font-weight: 700;
+  background-color: whitesmoke;
+  color: #7e1c71;
+  text-align: center;
+  vertical-align: middle;
+  border: 2px solid #7e1c71;
+  border-radius: 30px;
+  margin: 15px;
+  transition: all 0.4s ease-in;
+}
+
+.button-page:hover {
+  color: whitesmoke;
+  background-color: #7e1c71;
+  box-shadow: 0px 0px 15px #5b6000;
+}
