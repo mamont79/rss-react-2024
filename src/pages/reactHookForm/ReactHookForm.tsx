@@ -37,13 +37,13 @@ export const ReactHookForm = () => {
       gender: (data[0]?.gender as Gender) || '',
       acceptTC: data[0]?.acceptTC || false,
       country: data[0]?.country || '',
-      userPicture: '',
+      userPicture: data[0]?.userPicture || '',
     },
   });
+
   const onSubmit: SubmitHandler<UserData> = async (data: UserData) => {
     try {
       const fullData = { ...data, pictureName: files[0].name };
-      console.log(fullData);
       dispatch(setUserData(fullData));
       navigate('/');
     } catch (error) {

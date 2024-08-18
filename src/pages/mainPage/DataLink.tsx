@@ -17,8 +17,10 @@ export const DataLink = ({
   const { date } = useSelector((state: RootState) => state.user);
 
   let value = dataValue;
+  let lastValue = prevDataValue;
   if (typeof dataValue === 'boolean') {
     value = dataValue === true ? 'accepted' : 'not accepted';
+    lastValue = dataValue === true ? 'accepted' : 'not accepted';
   }
 
   useEffect(() => {
@@ -38,6 +40,8 @@ export const DataLink = ({
       <span className="user-left">{title}</span>
       {' : '}
       <span className={newer ? 'user-right-new' : 'user-right'}>{value}</span>
+      {' : '}
+      <span className="user-prev">{lastValue}</span>
     </p>
   );
 };

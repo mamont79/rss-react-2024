@@ -59,6 +59,15 @@ export const MainPage = () => {
     <>
       <Header />
       <h1 className="title">USERS DATA:</h1>
+      {check && (
+        <div className="user-data">
+          <DataLink
+            title={''}
+            dataValue={'Last Value'}
+            prevDataValue={'Previous Value'}
+          />
+        </div>
+      )}
       {check ? (
         (userInfo as UserInfoType[]).map(
           ({ title, dataValue, prevDataValue }) => (
