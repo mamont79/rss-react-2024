@@ -3,6 +3,15 @@ export type PokemonUrlData = {
   url: string;
 };
 
+export type SelectedPokemonType = {
+  id: string;
+  name: string;
+  url: string;
+  height: string;
+  weight: string;
+  type: string;
+};
+
 export type PokemonTypes = {
   type: { name: string };
 };
@@ -13,7 +22,10 @@ export type PokemonSearchProps = {
 
 export type DisplayProps = { pokemonsData: PokemonData[] };
 
-export type PokemonCardProps = { pokemonsCard: PokemonUrlData };
+export type PokemonCardProps = {
+  pokemonsCard: PokemonUrlData;
+  onCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
 export type PokemonSearchState = {
   searchValue: string;
@@ -27,9 +39,4 @@ export type PokemonData = {
   id: number;
   name: string;
   types: string;
-};
-
-export type MainContextType = {
-  data: Array<PokemonUrlData>;
-  updateData: (newData: Array<PokemonUrlData>) => void;
 };

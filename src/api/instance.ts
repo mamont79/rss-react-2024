@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { apiLink } from '../constants/constants';
+import { API_LINK } from '../constants/constants';
 
 const instance = axios.create({
-  baseURL: apiLink,
+  baseURL: API_LINK,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
   },

@@ -1,48 +1,69 @@
-import React from 'react';
-import MainContext from '../../pages/mainPage/context';
-import { MainContextType, PokemonUrlData } from '../../types/types';
+import { useParams, useNavigate } from 'react-router-dom';
+import { PokemonUrlData } from '../../types/types';
 import { PokemonCard } from '../card';
 import './style.css';
-import getPokemons from '../../api/getPokemons';
-import getOnePokemon from '../../api/getOnePokemon';
-import { lsItem } from '../../constants/constants';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { LoaderCard } from '../card/loader';
+import { useGetPokemonsQuery } from '../../api/pokemonsApi';
+import { useLocalStorage } from '../../customHooks/useLocalStorage';
+import { LS_ITEM } from '../../constants/constants';
 
-export class DisplayCards extends React.Component {
-  static contextType = MainContext;
-  declare context: MainContextType;
+export const DisplayCards = () => {
+  const [inputValue] = useLocalStorage(LS_ITEM);
 
-  componentDidMount = async () => {
-    const savedSearchPokemon = localStorage.getItem(lsItem);
-    if (savedSearchPokemon) {
-      const data = await getOnePokemon(savedSearchPokemon.toLowerCase());
-      this.context.updateData([
-        {
-          name: data.name,
-          url: `https://pokeapi.co/api/v2/pokemon/${data.id}/`,
-        },
-      ]);
-    } else {
-      const data = await getPokemons();
-      this.context.updateData(data);
+  const params = useParams<Record<string, string>>();
+  const { page } = params;
+  const navigate = useNavigate();
+  const { pokemonData, isLoading } = useSelector(
+    (state: RootState) => state.pokemons
+  );
+  const { data } = useGetPokemonsQuery(page || '1');
+  console.log(data);
+
+  let infoData: PokemonUrlData[];
+
+  if (inputValue || !data) infoData = pokemonData;
+  if (!inputValue && data) infoData = data.results;
+
+  const setCurrentId = (url: string) => {
+    const id = Number(url.split('/').reverse()[1]);
+    return () => navigate(`/page/${page}/details/${id}`);
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+  };
+
+  const handleCardClick = (
+    event: React.MouseEvent<HTMLDivElement>,
+    url: string
+  ) => {
+    if (!(event.target as HTMLElement).closest('input[type="checkbox"]')) {
+      setCurrentId(url)();
     }
   };
 
-  render() {
-    const { data } = this.context;
-
-    return (
-      <div className="display">
-        {data.map((el: PokemonUrlData) => (
-          <div key={el.name}>
+  return (
+    <div className="display">
+      {isLoading ? (
+        <LoaderCard />
+      ) : (
+        infoData!.map((el: PokemonUrlData) => (
+          <div
+            key={el.name}
+            onClick={(event) => handleCardClick(event, el.url)}
+          >
             <PokemonCard
               pokemonsCard={{
                 name: el.name,
                 url: el.url,
               }}
+              onCheckboxChange={handleChange}
             />
           </div>
-        ))}
-      </div>
-    );
-  }
-}
+        ))
+      )}
+    </div>
+  );
+};

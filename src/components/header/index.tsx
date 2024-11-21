@@ -1,77 +1,79 @@
-import React from 'react';
-import { MainContextType } from '../../types/types';
-import MainContext from '../../pages/mainPage/context';
-import ErrorBoundary from '../../errorBoundary';
-import ButtonMistake from './buttonMistake';
+import React, { useEffect, useState } from 'react';
 import './style.css';
-import getOnePokemon from '../../api/getOnePokemon';
-import getPokemons from '../../api/getPokemons';
-import { lsItem } from '../../constants/constants';
+import { useLocalStorage } from '../../customHooks/useLocalStorage';
+import { LS_ITEM } from '../../constants/constants';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { ThemeButton } from './themeButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import {
+  getOnePokemonAsync,
+  getPokemonsAsync,
+} from '../../store/pokemons/pokemonSlice';
+import { FlyOut } from './flyOut';
 
-type HeaderState = {
-  inputValue: string;
-};
-
-export class Header extends React.Component<unknown, HeaderState> {
-  static contextType = MainContext;
-  declare context: MainContextType;
-
-  placeholderValue: string;
-
-  constructor(props: unknown) {
-    super(props);
-    this.placeholderValue = 'Find your pokemon';
-    this.state = {
-      inputValue: '',
-    };
-  }
-
-  componentDidMount() {
-    const savedSearchPokemon = localStorage.getItem(lsItem);
-    if (savedSearchPokemon) {
-      this.setState({ inputValue: savedSearchPokemon });
-    }
-  }
-
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
-    this.setState({ inputValue: newValue });
-    localStorage.setItem('searchPokemon', newValue);
-  };
-
-  handleSearchClick = async () => {
-    if (this.state.inputValue) {
-      const data = await getOnePokemon(this.state.inputValue.toLowerCase());
-      this.context.updateData([
-        {
-          name: data.name,
-          url: `https://pokeapi.co/api/v2/pokemon/${data.id}/`,
-        },
-      ]);
-    } else {
-      const data = await getPokemons();
-      this.context.updateData(data);
-    }
-  };
-
-  render() {
-    return (
-      <header className="header">
-        <div className="search-wrapper">
-          <ErrorBoundary>
-            <ButtonMistake />
-          </ErrorBoundary>
-          <input
-            className="search-input"
-            value={this.state.inputValue}
-            onChange={this.handleInputChange}
-            placeholder={this.placeholderValue}
-          />
-          <button onClick={this.handleSearchClick} className="search-button">
-            Search
-          </button>
-        </div>
-      </header>
-    );
-  }
+interface HeaderProps {
+  changeInput(input: string): void;
 }
+
+export const Header = ({ changeInput }: HeaderProps) => {
+  const [inputValue, setInputValue] = useLocalStorage(LS_ITEM);
+  const [valueInInput, setValueInInput] = useState('');
+  const [, setSearchParams] = useSearchParams();
+  const { amount } = useSelector((state: RootState) => state.selected);
+  const dispatch = useDispatch<AppDispatch>();
+  const params = useParams<Record<string, string>>();
+  const { page } = params;
+
+  useEffect(() => {
+    let start = true;
+    if (start) {
+      setValueInInput(inputValue);
+      start = false;
+      if (inputValue) setSearchParams({ search: inputValue });
+      if (!inputValue) setSearchParams({});
+    }
+  }, [inputValue, setSearchParams]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setValueInInput(newValue);
+  };
+
+  const handleEnterPress = (event: React.KeyboardEvent) => {
+    const keyPress = event.key;
+    if (keyPress === 'Enter') onSearch();
+  };
+
+  const onSearch = async () => {
+    setInputValue(valueInInput);
+    if (valueInInput) {
+      setSearchParams({ search: valueInInput });
+      await dispatch(getOnePokemonAsync(valueInInput));
+    }
+    if (!valueInInput) {
+      setSearchParams({});
+      await dispatch(getPokemonsAsync(Number(page)));
+    }
+    changeInput(valueInInput);
+  };
+
+  return (
+    <header className="header">
+      <div className="search-wrapper">
+        <ThemeButton />
+        <input
+          className="search-input"
+          value={valueInInput || ''}
+          onChange={handleInputChange}
+          onKeyUp={handleEnterPress}
+          placeholder="Find your pokemon"
+        />
+        <button onClick={onSearch} className="search-button">
+          Search
+        </button>
+        <div className="flyout-wrapper">{amount > 0 && <FlyOut />}</div>
+      </div>
+    </header>
+  );
+};

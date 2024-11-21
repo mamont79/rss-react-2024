@@ -1,0 +1,29 @@
+.pagination-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  max-width: 500px;
+  margin: 10px auto;
+}
+
+.page-number {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--primary);
+  color: var(--color);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.page-number:hover {
+  background: #f5e276;
+  color: black;
+  cursor: pointer;
+}
+
+.page-number.active {
+  background-color: var(--background);
+  color: var(--color);
+}
