@@ -1,0 +1,9 @@
+.display {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1240px;
+  width: 80%;
+  gap: 20px;
+  justify-content: space-around;
+  margin: 15px auto;
+}
