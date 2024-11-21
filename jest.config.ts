@@ -2,7 +2,7 @@ export {};
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  collectCoverage: false,
+  collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{ts,tsx,js,jsx}',
     '!src/**/*.d.ts',
@@ -24,11 +24,12 @@ module.exports = {
     'package-lock.json',
     'reportWebVitals.ts',
     'jest.setup.ts',
+    'index.tsx',
     'src/main.tsx',
     'src/App.tsx',
-    'index.tsx',
+    'src/errorBoundary',
     'src/test',
-    'src/customHooks',
+    'src/store',
   ],
 
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],

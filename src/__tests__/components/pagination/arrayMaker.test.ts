@@ -16,7 +16,7 @@ describe('makeArray', () => {
     expect(makeArray(100)).toEqual([58, 59, 60, 61, 62, 63, 64, 65, 66]);
   });
 
-  it('should return an array of length 10', () => {
+  it('should return an array of length 9', () => {
     expect(makeArray(1).length).toBe(9);
     expect(makeArray(10).length).toBe(9);
     expect(makeArray(63).length).toBe(9);

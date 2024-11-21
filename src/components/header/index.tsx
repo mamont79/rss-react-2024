@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import ErrorBoundary from '../../errorBoundary';
-import ButtonMistake from './buttonMistake';
 import './style.css';
 import { useLocalStorage } from '../../customHooks/useLocalStorage';
-import { lsItem } from '../../constants/constants';
-import { useSearchParams } from 'react-router-dom';
+import { LS_ITEM } from '../../constants/constants';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { ThemeButton } from './themeButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import {
+  getOnePokemonAsync,
+  getPokemonsAsync,
+} from '../../store/pokemons/pokemonSlice';
+import { FlyOut } from './flyOut';
 
 interface HeaderProps {
   changeInput(input: string): void;
 }
 
 export const Header = ({ changeInput }: HeaderProps) => {
-  const [inputValue, setInputValue] = useLocalStorage(lsItem);
+  const [inputValue, setInputValue] = useLocalStorage(LS_ITEM);
   const [valueInInput, setValueInInput] = useState('');
   const [, setSearchParams] = useSearchParams();
+  const { amount } = useSelector((state: RootState) => state.selected);
+  const dispatch = useDispatch<AppDispatch>();
+  const params = useParams<Record<string, string>>();
+  const { page } = params;
 
   useEffect(() => {
     let start = true;
@@ -35,19 +45,23 @@ export const Header = ({ changeInput }: HeaderProps) => {
     if (keyPress === 'Enter') onSearch();
   };
 
-  const onSearch = () => {
+  const onSearch = async () => {
     setInputValue(valueInInput);
-    if (valueInInput) setSearchParams({ search: valueInInput });
-    if (!valueInInput) setSearchParams({});
+    if (valueInInput) {
+      setSearchParams({ search: valueInInput });
+      await dispatch(getOnePokemonAsync(valueInInput));
+    }
+    if (!valueInInput) {
+      setSearchParams({});
+      await dispatch(getPokemonsAsync(Number(page)));
+    }
     changeInput(valueInInput);
   };
 
   return (
     <header className="header">
       <div className="search-wrapper">
-        <ErrorBoundary>
-          <ButtonMistake />
-        </ErrorBoundary>
+        <ThemeButton />
         <input
           className="search-input"
           value={valueInInput || ''}
@@ -58,6 +72,7 @@ export const Header = ({ changeInput }: HeaderProps) => {
         <button onClick={onSearch} className="search-button">
           Search
         </button>
+        <div className="flyout-wrapper">{amount > 0 && <FlyOut />}</div>
       </div>
     </header>
   );
